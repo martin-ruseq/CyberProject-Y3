@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 import requests
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup as bs4
 import plotly.graph_objs as go
 
 st.write(""" # Cyber Data Collector App
@@ -15,7 +15,7 @@ url = "https://www.statista.com/statistics/221390/share-of-hacking-methods-acros
 response = requests.get(url)
 
 # Parse the HTML content using BeautifulSoup
-soup = BeautifulSoup(response.content, "html.parser")
+soup = bs4(response.content, "html.parser")
 
 # Find the data table on the page
 data_table = soup.find("table")
