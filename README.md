@@ -18,8 +18,8 @@ As you may have noticed, the application will present the data in the form of ch
 2. Install the required libraries using `pip install -r requirements.txt`.
 3. Run the application using `streamlit run cyber-data-collector-app.py`.
 
-## Production Environment {#production-environment}
-
+## Production Environment
+{#production-environment}
 [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://cyber-project-marcinrusiecki.streamlit.app/)
  
 
