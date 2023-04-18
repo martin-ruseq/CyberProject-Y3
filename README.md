@@ -1,4 +1,4 @@
-# Cybercrime Data Collection Application
+# Cybercrime Data Collection Application :bar_chart:
 
 As part of my 3rd year Cyber Security project, I am creating a Python application that collects cybercrime-related data from the Internet. The application will be built with the use of the following tools:
 
