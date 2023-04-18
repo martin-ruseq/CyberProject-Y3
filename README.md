@@ -7,6 +7,7 @@ As part of my 3rd year Cyber Security project, I am creating a Python applicatio
 - [Pandas](https://pandas.pydata.org/) - a library for data manipulation and analysis
 - [Plotly](https://plotly.com/python/) - a graphing library for creating interactive, publication-quality graphs
 - [Requests](https://requests.readthedocs.io/en/master/) - a library for making HTTP requests
+- and many more...
   
 As you mey have noticed, the application will present the data in the form of charts and graphs as a web application. The applcation is in the early stages of development, so if like what you see, please :star: the repository and <a href="https://github.com/martin-ruseq" target="_blank" style="background-color: #0366d6; color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none; font-weight: bold; display: inline-block;">Follow Me</a> on GitHub to stay up to date with the latest changes and new features that will be adding regularly for the next few weeks.
 
