@@ -1,6 +1,6 @@
-# Python Cybercrime Data Collection and Analysis Application
+# Cybercrime Data Collection Application in Python with Streamlit
 
-This project showcases the power of Python for cybercrime data collection, analysis, and visualization. It utilizes the following tools and libraries:
+This project aims 
 
 - [Streamlit](https://streamlit.io/) - a collection of useful tools for building data apps
 - [Beautiful Soup](https://www.crummy.com/software/BeautifulSoup/) - a library for pulling data out of HTML and XML files
@@ -13,9 +13,9 @@ The collected data is cleaned and analyzed using Pandas and NumPy, and visualize
 
 ## Getting Started
 
-1. Clone the repository.
+1. Clone the repository using `git clone 
 2. Install the required libraries using `pip install -r requirements.txt`.
-3. Run the application using `streamlit run cyber-datacollector-app.py`.
+3. Run the application using `streamlit run cyber-data-collector-app.py`.
 
 ## Production Environment
 [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://cyber-project-marcinrusiecki.streamlit.app/)
