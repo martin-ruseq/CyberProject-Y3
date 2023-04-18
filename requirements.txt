@@ -1,0 +1,8 @@
+streamlit
+beautifulsoup4
+numpy
+pandas
+requests
+plotly
+flask
+
