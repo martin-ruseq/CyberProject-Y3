@@ -1,19 +1,20 @@
 # Cybercrime Data Collection Application in Python with Streamlit
 
-This project aims 
+As part of my 3rd year Cyber Security project, I am creating a Python application that collects cybercrime-related data from the Internet. The application will be built with the use of the following tools:
 
-- [Streamlit](https://streamlit.io/) - a collection of useful tools for building data apps
+- [Streamlit](https://streamlit.io/) - an open-source Python library that makes it easy to create and share beautiful, custom web apps for machine learning and data science.   
 - [Beautiful Soup](https://www.crummy.com/software/BeautifulSoup/) - a library for pulling data out of HTML and XML files
 - [Pandas](https://pandas.pydata.org/) - a library for data manipulation and analysis
-- [NumPy](https://numpy.org/) - a library for numerical computing in Python
-- [Matplotlib](https://matplotlib.org/) - a plotting library for creating static, animated, and interactive visualizations in Python
 - [Plotly](https://plotly.com/python/) - a graphing library for creating interactive, publication-quality graphs
+- [Requests](https://requests.readthedocs.io/en/master/) - a library for making HTTP requests
+  
+As you mey have noticed, the application will present the data in the form of charts and graphs as a web application. The applcation is in the early stages of development, so if like what you see, please :star: the repository and [![Follow on GitHub](https://img.shields.io/github/followers/martin-ruseq?label=Follow&style=social)](https://github.com/martin-ruseq)
+ me on GitHub to stay up to date with the latest changes and new features that will be added regularly for the next few weeks
 
-The collected data is cleaned and analyzed using Pandas and NumPy, and visualized through the use of Matplotlib and Plotly. The web front end is developed using Flask, providing a user-friendly interface that allows for data filtering, sorting, and interaction with visualizations.
 
-## Getting Started
+## Installation
 
-1. Clone the repository using `git clone 
+1. Clone the repository using `git clone https://github.com/martin-ruseq/CyberProject-Y3.git`
 2. Install the required libraries using `pip install -r requirements.txt`.
 3. Run the application using `streamlit run cyber-data-collector-app.py`.
 
