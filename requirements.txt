@@ -5,6 +5,6 @@ pandas
 requests
 plotly
 flask
-streamlit_option_menu
+streamlit-option-menu==0.3.2
 pip==23.0.1
 
