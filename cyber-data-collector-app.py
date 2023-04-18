@@ -4,6 +4,14 @@ import requests
 from bs4 import BeautifulSoup as bs4
 import plotly.graph_objs as go
 
+hide_streamlit_style = """
+            <style>
+            #MainMenu {visibility: hidden;}
+            footer {visibility: hidden;}
+            </style>
+            """
+st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
+
 st.write(""" # Cyber Data Collector App
          by Marcin Rusiecki""")
 st.write("*Your cyber statistics in one place*")
