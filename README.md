@@ -18,7 +18,7 @@ The collected data is cleaned and analyzed using Pandas and NumPy, and visualize
 3. Run the application using `streamlit run cyber-datacollector-app.py`.
 
 ## Production Environment
-[![Deploy](https://www.streamlit.io/badges/streamlit_badge_black_white.svg)](https://cyber-project-marcinrusiecki.streamlit.app/))]]
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://cyber-project-marcinrusiecki.streamlit.app/)
  
 
 ## License
