@@ -5,4 +5,5 @@ pandas
 requests
 plotly
 flask
+pip --upgrade
 
