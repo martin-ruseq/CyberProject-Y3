@@ -24,7 +24,6 @@ hide_streamlit_style = """
             """ 
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
-
 # Create a sidebar menu
 with st.sidebar:
     selected_page = option_menu(
@@ -33,7 +32,6 @@ with st.sidebar:
         icons = ["house", "bi-clipboard-data", "info-square", "envelope"], # Use any of the Bootstrap Icons
         menu_icon = "cast", 
         default_index = 0, # Index of the default option ("Home" in this case)
-        
     )
     
 # Display the selected page    
@@ -54,4 +52,3 @@ if selected_page == "Contact":
     st.title("Contact")
     st.write("If you have any questions or suggestions, please contact me by [email](mailto:C00263263@itcarlow.ie).")
     
-
