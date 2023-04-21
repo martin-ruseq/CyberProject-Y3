@@ -28,7 +28,7 @@ st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 # Create a sidebar menu
 with st.sidebar:
     selected_page = option_menu(
-        menu_title = "App Menu",
+        menu_title = "MAIN MENU", # Title of the menu
         options = ["Home","Data", "About", "Contact"], # List of options in the menu
         icons = ["house", "bi-clipboard-data", "info-square", "envelope"], # Use any of the Bootstrap Icons
         menu_icon = "cast", 
@@ -38,7 +38,7 @@ with st.sidebar:
     
 # Display the selected page    
 if selected_page == "Home":
-    st.title("Welcome to the Cyber Data Collector App!")
+    st.title("Welcome to the Cyber Data Collector")
     st.header("*Your cyber statistics hub*")
     st.warning("The app is still in development and more features will be added in the future :wrench: \n\n Please check back later for updates :new: \n\n Thank you for your patience :pray: ")
     
