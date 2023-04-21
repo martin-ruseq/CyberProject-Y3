@@ -5,6 +5,12 @@ from bs4 import BeautifulSoup as bs4
 import plotly.graph_objs as go
 from streamlit_option_menu import option_menu
 
+# Set the page title and icon
+st.set_page_config(page_title="Cyber Data Collector App", page_icon="📊", 
+                   layout="centered", 
+                   initial_sidebar_state="expanded",
+                   )
+
 # Hide the menu and footer of Streamlit Cloud deployments
 hide_streamlit_style = """
             <style>
@@ -13,6 +19,7 @@ hide_streamlit_style = """
             </style>
             """ 
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
+
 
 # Create a sidebar menu
 with st.sidebar:
@@ -27,12 +34,13 @@ with st.sidebar:
     
 # Display the selected page    
 if selected_page == "Home":
-    st.write(""" # Cyber Data Collector App""")
-    st.write(" ##### *Your cyber statistics in one place*")
+    st.title("Welcome to the Cyber Data Collector App!")
+    st.header("*Your cyber statistics hub*")
+    st.warning("The app is still in development and more features will be added in the future :wrench: \n\n Please check back later for updates :new: \n\n Thank you for your patience :pray: ")
     
 if selected_page == "Data":
 
-    # Define the URL to scrape
+   """ # Define the URL to scrape
     url = "https://www.statista.com/statistics/221390/share-of-hacking-methods-across-organizations/"
 
     # Send a request to the URL and get the response
@@ -125,7 +133,7 @@ if selected_page == "Data":
         st.plotly_chart(fig)
 
     else:
-        print("Data table not found on page.")
+        print("Data table not found on page.")"""
 
 if selected_page == "About":
     st.write(""" # About""")
