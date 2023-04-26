@@ -19,7 +19,7 @@ As you may have noticed, the application will present the data in the form of ch
 3. Run the application using `streamlit run cyber-data-collector-app.py`.
 
 ## Production Environment :rocket:
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://cyber-project-marcinrusiecki.streamlit.app/)
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://cyberproject-marcinrusiecki.streamlit.app/)
  
 
 ## License :page_facing_up:
