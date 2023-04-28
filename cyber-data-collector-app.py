@@ -11,7 +11,7 @@ from streamlit_option_menu import option_menu
 import base64 as b64
 
 # Set the page title and icon
-st.set_page_config(page_title="Cyber Data Collector App", page_icon="📊", 
+st.set_page_config(page_title="CyberHub App", page_icon="📊", 
                    layout="centered", 
                    initial_sidebar_state="expanded",
                    )
@@ -27,8 +27,9 @@ st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
 # Create a sidebar menu
 with st.sidebar:
+    st.sidebar.image("resources/logo.png", use_column_width=True)
     selected_page = option_menu(
-        menu_title = "MENU", # Title of the menu
+        menu_title = "", # Title of the menu
         options = ["Home","Data", "About", "Contact"], # List of options in the menu
         icons = ["house", "bi-clipboard-data", "info-square", "envelope"], # Use any of the Bootstrap Icons
         menu_icon = "cast",
@@ -37,8 +38,8 @@ with st.sidebar:
     
 # Display the selected page    
 if selected_page == "Home":
-    st.title("Welcome to the Cyber Data Collector")
-    st.subheader("*Your cyber statistics hub*")
+    st.title("Welcome to the CyberHub :wave:")
+    st.subheader("*Your cyber statistics in one place* :bar_chart:")
     st.warning("The app is still in development and more features will be added in the future :wrench: \n\n Please check back later for updates :new: \n\n Thank you for your patience :pray: ")
     
 if selected_page == "Data":
@@ -239,5 +240,4 @@ if selected_page == "About":
 
 if selected_page == "Contact":
     st.title("Contact")
-    st.write("If you have any questions or suggestions, please contact me by [email](mailto:C00263263@itcarlow.ie).")
-    
+    st.write("If you have any questions or suggestions, please contact me by [email](mailto:C00263263@itcarlow.ie).") 
