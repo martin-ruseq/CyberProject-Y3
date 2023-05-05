@@ -9,7 +9,6 @@ from bs4 import BeautifulSoup as bs4
 import plotly_express as px
 import plotly.graph_objs as pgo
 from streamlit_option_menu import option_menu
-import base64 as b64
 
 # Set the page title and icon
 st.set_page_config(page_title="CyberHub App", page_icon="⛏️", 
