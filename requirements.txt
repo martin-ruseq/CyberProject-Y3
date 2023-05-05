@@ -4,6 +4,7 @@ numpy
 pandas
 requests
 plotly
+plotly-express
 flask
 streamlit-option-menu
 pip==23.0.1
