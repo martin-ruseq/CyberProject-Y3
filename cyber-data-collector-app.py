@@ -340,7 +340,11 @@ if selected_page == "Cyber Statistics":
     # START OF CYBERSECURITY MARKET SIZE DATA
     st.title("Cybersecurity market size worldwide 2019-2030")
     st.subheader("*(in billion U.S. dollars)*")
-    st.markdown("""The statistic shows the size of the cybersecurity market worldwide, from 2019 to 2030 acording to the data from [Next Move Strategy Consulting](https://www.nextmsc.com/). The global cybersecurity market is projected to reach 657.02 billion U.S. dollars by 2030.""")
+    st.markdown(f"""
+        The statistic shows the size of the cybersecurity market worldwide, from 2019 to 2030 acording to the data from [Next Move Strategy Consulting](https://www.nextmsc.com/). The global cybersecurity market is projected to reach 657.02 billion U.S. dollars by 2030.
+        
+        Source: [statista.com](https://www.statista.com/statistics/1256346/worldwide-cyber-security-market-revenues/ and [nextmsc.com](https://www.nextmsc.com/])
+        """)
     
     url = "https://www.statista.com/statistics/1256346/worldwide-cyber-security-market-revenues/"
     cyber_market_table_str = get_data(url)
