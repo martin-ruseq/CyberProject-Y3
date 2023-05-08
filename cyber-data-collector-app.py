@@ -88,7 +88,7 @@ if selected_page == "Cyber Statistics":
                 methods_list.append(methods)
                 percentage_list.append(percentage)
 
-        # Hacking Methods Chart and Table
+        # START OF THE GLOBAL HACKING METHODS DATA
         st.title("Global Hacking Methods")
         st.markdown("""
             This chart/table shows the percentage of the leading global hacking methods.
@@ -106,8 +106,8 @@ if selected_page == "Cyber Statistics":
         chart_data = {"Methods": methods_list, "Percentage": percentage_list}
         chart_df = pd.DataFrame(chart_data)
 
+        # Createing the horizontal bar chart using Plotly
         if data_year == "2019" and view_type == "Chart":
-            # Createing the horizontal bar chart using Plotly
             hack_methods_2019 = pgo.Figure(pgo.Bar(
                 x = chart_df['Percentage'],
                 y = chart_df['Methods'],
@@ -189,8 +189,9 @@ if selected_page == "Cyber Statistics":
     st.markdown(
         '<hr style="border-top: 4px solid #FCCA3A; border-radius: 5px">',
         unsafe_allow_html=True,)
+    # END OF THE GLOBAL HACKING METHODS DATA
 
-    # Legal Cases under Computer Misuse Act 1990 table
+    # START OF THE LEGAL CASES UNDER COMPUTER MISUSE ACT 1990 (UK) DATA
     st.title("Legal Cases under Computer Misuse Act 1990 (UK) as of 2021")
     st.markdown("""
         This table shows the number of legal cases under the Computer Misuse Act 1990 in different years.
@@ -236,8 +237,9 @@ if selected_page == "Cyber Statistics":
     st.markdown(
         '<hr style="border-top: 4px solid #FCCA3A; border-radius: 5px">',
         unsafe_allow_html=True,)
+    # END OF LEGAL CASES DATA
     
-    # Monetary Damages caused by Cybercrime
+    # START OF CYBERCRIME DAMAGES DATA
     st.title("Monetary Damages caused by Cybercrimes reported to IC3 form 2001 to 2022")
     st.subheader("*(in million U.S. dollars)*")
     st.markdown("""
@@ -333,6 +335,54 @@ if selected_page == "Cyber Statistics":
         st.markdown(
             '<hr style="border-top: 4px solid #FCCA3A; border-radius: 5px">',
             unsafe_allow_html=True,)
+    # END OF CYBERCRIME DAMAGES DATA
+        
+    # START OF CYBERSECURITY MARKET SIZE DATA
+    st.title("Cybersecurity market size worldwide 2019-2030")
+    st.subheader("*(in billion U.S. dollars)*")
+    st.markdown("""The statistic shows the size of the cybersecurity market worldwide, from 2019 to 2030 acording to the data from [Next Move Strategy Consulting](https://www.nextmsc.com/). The global cybersecurity market is projected to reach 657.02 billion U.S. dollars by 2030.""")
+    
+    url = "https://www.statista.com/statistics/1256346/worldwide-cyber-security-market-revenues/"
+    cyber_market_table_str = get_data(url)
+    cyber_market_table = bs4(cyber_market_table_str, 'html.parser')
+    
+    def make_cyber_market_df(cyber_market_table):
+        cyber_market_list = []
+        years_list = []
+        for row in cyber_market_table.find_all('tr'):
+            cells = row.find_all('td')
+            if len(cells) > 1:
+                cyber_market = cells[1].text.strip()
+                years = cells[0].text.strip()
+                cyber_market_list.append(cyber_market)
+                years_list.append(years)
+        cyber_market_df = pd.DataFrame({'Years': years_list, 'Cyber Market': cyber_market_list})
+        
+        return cyber_market_df, cyber_market_list, years_list
+    
+    cyber_market_df = make_cyber_market_df(cyber_market_table)
+    cyber_market_list = cyber_market_df[1]
+    years_list = cyber_market_df[2]
+    
+    @st.cache_data
+    def create_cyber_market_barchart(cyber_market_df):
+        barchart = px.bar(cyber_market_df, x="Years", y="Cyber Market", color="Cyber Market", color_continuous_scale=px.colors.sequential.Viridis)
+        barchart.update_layout(
+            xaxis_title="Years",
+            xaxis=dict(
+                tickmode='linear',
+                tickangle=45,
+                tick0=2019,
+                dtick=1,
+                
+            ),
+            yaxis_title="Cyber Market (in billion U.S. dollars)",
+            font=dict(size = 16),
+            
+        )
+        return barchart
+        
+    st.plotly_chart(create_cyber_market_barchart(cyber_market_df[0]))
         
 if selected_page == "CVE Data":
     st.warning("This page is still in development and will be available soon... :warning:")
