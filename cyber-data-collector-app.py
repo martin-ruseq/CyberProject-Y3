@@ -385,8 +385,11 @@ if selected_page == "Cyber Statistics":
             
         )
         return barchart
-        
-    st.plotly_chart(create_cyber_market_barchart(cyber_market_df[0]))
+
+    cyber_marker_view = st.selectbox("Select View Type:", ["Bar", "Table"])
+    
+    if cyber_marker_view == "Bar":
+        st.plotly_chart(create_cyber_market_barchart(cyber_market_df[0]))
         
 if selected_page == "CVE Data":
     st.warning("This page is still in development and will be available soon... :warning:")
