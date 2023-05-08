@@ -100,14 +100,14 @@ if selected_page == "Cyber Statistics":
         data_year = st.selectbox("Select Year:", ["2019", "2018", "2017", "2016", "2015"])
         
         # Create dropdown menu for chart type
-        view_type = st.selectbox("Select View Type:", ["Chart", "Table"])
+        view_type = st.selectbox("Select View Type:", ["Horizontal Bar Chart", "Table"])
 
         # Create a dataframe to store the data for the selected year
         chart_data = {"Methods": methods_list, "Percentage": percentage_list}
         chart_df = pd.DataFrame(chart_data)
 
         # Createing the horizontal bar chart using Plotly
-        if data_year == "2019" and view_type == "Chart":
+        if data_year == "2019" and view_type == "Horizontal Bar Chart":
             hack_methods_2019 = pgo.Figure(pgo.Bar(
                 x = chart_df['Percentage'],
                 y = chart_df['Methods'],
@@ -176,7 +176,7 @@ if selected_page == "Cyber Statistics":
             st.markdown("*Download the data:*\n\n")
             csv_hack, json_hack, html_hack = download_btns_hack_methods(methods_list, percentage_list)
             
-        elif not data_year == "2019" and view_type == "Bar Chart":
+        elif not data_year == "2019" and view_type == "Horizontal Bar Chart":
             st.warning("No data available for the selected year :warning:")
             
         if data_year == "2019" and view_type == "Table":
@@ -340,7 +340,7 @@ if selected_page == "Cyber Statistics":
     # START OF CYBERSECURITY MARKET SIZE DATA
     st.title("Cybersecurity market size worldwide 2019-2030")
     st.subheader("*(in billion U.S. dollars)*")
-    st.markdown(f"""
+    st.markdown("""
         The statistic shows the size of the cybersecurity market worldwide, from 2019 to 2030 acording to the data from [Next Move Strategy Consulting](https://www.nextmsc.com/). The global cybersecurity market is projected to reach 657.02 billion U.S. dollars by 2030.
         
         Source: [statista.com](https://www.statista.com/statistics/1256346/worldwide-cyber-security-market-revenues/) and [nextmsc.com](https://www.nextmsc.com/])
@@ -370,26 +370,68 @@ if selected_page == "Cyber Statistics":
     
     @st.cache_data
     def create_cyber_market_barchart(cyber_market_df):
-        barchart = px.bar(cyber_market_df, x="Years", y="Cyber Market", color="Cyber Market", color_continuous_scale=px.colors.sequential.Viridis)
+        barchart = px.bar(
+            cyber_market_df, x="Years", 
+            y="Cyber Market", orientation='v', 
+            color="Cyber Market", 
+            color_discrete_sequence=px.colors.cmocean.thermal_r, 
+            labels={"Cyber Market": "Cyber Market (in billion U.S. dollars)"}
+            )
+        
         barchart.update_layout(
-            xaxis_title="Years",
-            xaxis=dict(
-                tickmode='linear',
-                tickangle=45,
-                tick0=2019,
-                dtick=1,
-                
-            ),
-            yaxis_title="Cyber Market (in billion U.S. dollars)",
-            font=dict(size = 16),
-            
+            showlegend=False,
         )
+        
         return barchart
-
-    cyber_marker_view = st.selectbox("Select View Type:", ["Bar Chart", "Table"])
     
-    if cyber_marker_view == "Bar Chart":
-        st.plotly_chart(create_cyber_market_barchart(cyber_market_df[0]))
+    def download_btns_cyber_market_data(cyber_market_list, years_list):
+        cvs_column, json_column, html_column = st.columns(3, gap = "small")
+        
+        with cvs_column:
+            csv = pd.DataFrame({'Years': years_list, 'Cyber Market': cyber_market_list}).to_csv(index=False)
+            csv_btn = st.download_button(
+                label="Download as CSV",
+                help="Click here to download the data as CSV file",
+                data=bytes(csv, encoding='utf-8'),
+                file_name="cybersecurity-market-size.csv",
+                mime="text/csv"
+            )
+        with json_column:
+            json = pd.DataFrame({'Years': years_list, 'Cyber Market': cyber_market_list}).to_json(orient='records')
+            json_btn = st.download_button(
+                label="Download as JSON",
+                help="Click here to download the data as JSON file",
+                data=bytes(json, encoding='utf-8'),
+                file_name="cybersecurity-market-size.json",
+                mime="application/json"
+            )
+        with html_column:
+            html = pd.DataFrame({'Years': years_list, 'Cyber Market': cyber_market_list}).to_html(index=False)
+            html_btn = st.download_button(
+                label="Download as HTML",
+                help="Click here to download the data as HTML file",
+                data=bytes(html, encoding='utf-8'),
+                file_name="cybersecurity-market-size.html",
+                mime="text/html"
+            )
+        return csv_btn, json_btn, html_btn
+        
+
+    cyber_marker_view = st.selectbox("Select View Type:", ["Vertical Bar Chart", "Table"])
+    
+    if cyber_marker_view == "Vertical Bar Chart":
+        st.write(create_cyber_market_barchart(cyber_market_df[0]))
+        st.markdown("*Download the data:*\n\n")
+        csv_cyber_market, json_cyber_market, html_cyber_market = download_btns_cyber_market_data(cyber_market_list, years_list)
+        st.markdown(
+            '<hr style="border-top: 4px solid #FCCA3A; border-radius: 5px">',
+            unsafe_allow_html=True,)
+    elif cyber_marker_view == "Table":
+        st.dataframe(cyber_market_df[0], height=400, width=1000)
+        st.info("To download the data, please select the Vertical Bar Chart view type")
+        st.markdown(
+            '<hr style="border-top: 4px solid #FCCA3A; border-radius: 5px">',
+            unsafe_allow_html=True,)
         
 if selected_page == "CVE Data":
     st.warning("This page is still in development and will be available soon... :warning:")
