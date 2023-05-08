@@ -100,7 +100,7 @@ if selected_page == "Cyber Statistics":
         data_year = st.selectbox("Select Year:", ["2019", "2018", "2017", "2016", "2015"])
         
         # Create dropdown menu for chart type
-        view_type = st.selectbox("Select View Type:", ["Bar Chart", "Table"])
+        view_type = st.selectbox("Select View Type:", ["Chart", "Table"])
 
         # Create a dataframe to store the data for the selected year
         chart_data = {"Methods": methods_list, "Percentage": percentage_list}
