@@ -100,7 +100,7 @@ if selected_page == "Cyber Statistics":
         data_year = st.selectbox("Select Year:", ["2019", "2018", "2017", "2016", "2015"])
         
         # Create dropdown menu for chart type
-        view_type = st.selectbox("Select View Type:", ["Chart", "Table"])
+        view_type = st.selectbox("Select View Type:", ["Bar Chart", "Table"])
 
         # Create a dataframe to store the data for the selected year
         chart_data = {"Methods": methods_list, "Percentage": percentage_list}
@@ -176,7 +176,7 @@ if selected_page == "Cyber Statistics":
             st.markdown("*Download the data:*\n\n")
             csv_hack, json_hack, html_hack = download_btns_hack_methods(methods_list, percentage_list)
             
-        elif not data_year == "2019" and view_type == "Chart":
+        elif not data_year == "2019" and view_type == "Bar Chart":
             st.warning("No data available for the selected year :warning:")
             
         if data_year == "2019" and view_type == "Table":
@@ -386,9 +386,9 @@ if selected_page == "Cyber Statistics":
         )
         return barchart
 
-    cyber_marker_view = st.selectbox("Select View Type:", ["Bar", "Table"])
+    cyber_marker_view = st.selectbox("Select View Type:", ["Bar Chart", "Table"])
     
-    if cyber_marker_view == "Bar":
+    if cyber_marker_view == "Bar Chart":
         st.plotly_chart(create_cyber_market_barchart(cyber_market_df[0]))
         
 if selected_page == "CVE Data":
