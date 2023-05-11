@@ -341,7 +341,9 @@ if selected_page == "Cyber Statistics":
     st.title("Cybersecurity market size worldwide 2019-2030")
     st.subheader("*(in billion U.S. dollars)*")
     st.markdown("""
-        The statistic shows the size of the cybersecurity market worldwide, from 2019 to 2030 acording to the data from [Next Move Strategy Consulting](https://www.nextmsc.com/). The global cybersecurity market is projected to reach 657.02 billion U.S. dollars by 2030.
+        The statistic shows the size of the cybersecurity market worldwide, from 2019 to 2030 acording to the data
+        from [Next Move Strategy Consulting](https://www.nextmsc.com/). The global cybersecurity market is 
+        projected to reach 657.02 billion U.S. dollars by 2030.
         
         Source: [statista.com](https://www.statista.com/statistics/1256346/worldwide-cyber-security-market-revenues/) and [nextmsc.com](https://www.nextmsc.com/])
         """)
@@ -434,8 +436,92 @@ if selected_page == "Cyber Statistics":
             unsafe_allow_html=True,)
         
 if selected_page == "CVE Data":
-    st.warning("This page is still in development and will be available soon... :warning:")
-              
+    
+    @st.cache_data
+    def get_latest_vulns():
+        url = "https://nvd.nist.gov/general/nvd-dashboard"
+        response = requests.get(url)
+        soup = bs4(response.content, 'html.parser')
+        ul = soup.find('ul', {'id': 'latestVulns'})
+
+        if ul is None:
+            st.error('Could not find CVE data.')
+            return []
+
+        latest_20_vulns = []
+        for li in ul.find_all('li'):
+            vuln = {
+                'CVE ID': li.div.find('a').text.strip(),
+                'Description': li.div.find('strong').next_sibling.strip().strip(' - '),
+                'Severity': li.select_one('span', {'id': 'cvss*'}).text.strip()[5:],
+                'Published': li.select_one('strong:contains("Published")').next_sibling.strip().split(';')[0].strip(),
+                'CVE URL': 'https://nvd.nist.gov' + li.div.find('a')['href'],
+            }
+            latest_20_vulns.append(vuln)
+            latest_20_vulns_df = pd.DataFrame(latest_20_vulns).set_index('CVE ID')
+
+        return latest_20_vulns_df
+    
+    @st.cache_data
+    def colors_4_severity_scores(severity):
+        if "CRITICAL" in severity:
+            return 'background-color: black; color: white'
+        elif "HIGH" in severity:
+            return 'background-color: red; color: white'
+        elif "MEDIUM" in severity:
+            return 'background-color: orange; color: black'
+        elif "LOW" in severity:
+            return 'background-color: yellow; color: black'
+        else:
+            return 'background-color: #AAAAAA; color: white'
+    
+    latest_20_vulns_df = get_latest_vulns()
+    styled_latest_20_vulns_df = latest_20_vulns_df.style.applymap(colors_4_severity_scores, subset=['Severity'])
+    st.markdown("<h1 style='text-align: center; color: #0062AF;'>Common Vulnerabilities and Exposures (CVE) Dashboard</h1>", unsafe_allow_html=True)
+    st.markdown(
+        '<hr style="border-top: 4px solid #FCCA3A; border-radius: 5px">',
+        unsafe_allow_html=True,)
+    cve_explenation = st.expander("What is a CVE?")
+    cve_explenation.write("""
+        Common Vulnerabilities and Exposures (CVE®) is a list of records — each containing an identification number,
+        a description, and at least one public reference — for publicly known cybersecurity vulnerabilities. 
+        CVE Entries are used in numerous cybersecurity products and services from around the world, including the
+        U.S. National Vulnerability Database (NVD).""")
+    
+    cve_score_explenation = st.expander("What is a CVSS Score?")
+    cve_score_explenation.write("""
+        The Common Vulnerability Scoring System (CVSS) is a free and open industry standard for assessing the 
+        severity of computer system security vulnerabilities. CVSS attempts to assign severity scores to 
+        vulnerabilities,allowing responders to prioritize responses and resources according to threat. 
+        Scores are calculated based on a formula that depends on several metrics that approximate ease of 
+        exploit and the impact of exploit. Scores range from 0 to 10, with 10 being the most severe.
+        Visit the [Vulnerability Metrics](https://nvd.nist.gov/vuln-metrics/cvss#) to learn more.""")
+    st.subheader("Latest 20 Scored Vulnerabilities")
+    st.markdown("""
+        Source: [National Vulnerability Database (NVD)](https://nvd.nist.gov/)
+        """)
+    st.dataframe(styled_latest_20_vulns_df, height=400, width=1000)
+
+    tab1, tab2, tab3, tab4 = st.tabs(["Top 20 CVSS by Product", "CVSS Score Distribution", "Weeknesses Types", "CVEs by Year"])
+    st.markdown("""<style>
+                .css-b218v0 p {
+                    word-break: break-word;
+                    margin-bottom: 0px;
+                    font-size: 14px;
+                    font-size: large;
+                }<style>""", unsafe_allow_html=True)
+    with tab1:
+        st.subheader("Top 20 CVSS by Product")
+        
+    with tab2:
+        st.subheader("CVSS Score Distribution")
+        
+    with tab3:
+        st.subheader("Weeknesses Types")
+    
+    with tab4:
+        st.subheader("CVEs by Year")
+
 if selected_page == "About":
     st.title("About")
     st.write("This app was created to collect cyber data from various sources and visualize it in one place. The data is collected using Python and the visualization is done using Streamlit. The app is still in development and more features will be added in the future.")
