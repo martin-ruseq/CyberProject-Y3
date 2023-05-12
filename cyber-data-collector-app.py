@@ -12,7 +12,7 @@ from streamlit_option_menu import option_menu
 
 # Set the page title and icon
 st.set_page_config(page_title="CyberHub App", page_icon="⛏️", 
-                   layout="centered", 
+                   layout="wide", 
                    initial_sidebar_state="expanded",
                    )
 
@@ -127,6 +127,7 @@ if selected_page == "Cyber Statistics":
                 xaxis_title = "Percentage",
                 yaxis_title = "Methods",
                 font = dict(size = 16),
+                width = 1000,
                 margin = dict(l = 0, r = 0, t = 60, b = 0),
             )
             # Display the chart using Plotly
@@ -275,12 +276,12 @@ if selected_page == "Cyber Statistics":
         graph = px.line(damage_df, x="Years", y="Damages",markers=True)
         graph.update_layout(
             xaxis_title="Years",
+            width=1000,
             xaxis=dict(
                 tickmode='linear',
                 tickangle=45,
                 tick0=2001,
-                dtick=1,
-                
+                dtick=1, 
             ),
             yaxis_title="Damages (in million U.S. dollars)",
             font=dict(size = 16),
@@ -382,6 +383,7 @@ if selected_page == "Cyber Statistics":
         
         barchart.update_layout(
             showlegend=False,
+            width=1000,
         )
         
         return barchart
@@ -423,6 +425,7 @@ if selected_page == "Cyber Statistics":
     
     if cyber_marker_view == "Vertical Bar Chart":
         st.write(create_cyber_market_barchart(cyber_market_df[0]))
+        st.info("The dates with asterisk (*) are the projected dates")
         st.markdown("*Download the data:*\n\n")
         csv_cyber_market, json_cyber_market, html_cyber_market = download_btns_cyber_market_data(cyber_market_list, years_list)
         st.markdown(
@@ -430,11 +433,13 @@ if selected_page == "Cyber Statistics":
             unsafe_allow_html=True,)
     elif cyber_marker_view == "Table":
         st.dataframe(cyber_market_df[0], height=400, width=1000)
+        st.info("The dates with asterisk (*) are the projected dates")
         st.info("To download the data, please select the Vertical Bar Chart view type")
         st.markdown(
             '<hr style="border-top: 4px solid #FCCA3A; border-radius: 5px">',
             unsafe_allow_html=True,)
-        
+    # END OF CYBERSECURITY MARKET SIZE
+    
 if selected_page == "CVE Data":
     
     @st.cache_data
@@ -477,10 +482,12 @@ if selected_page == "CVE Data":
     
     latest_20_vulns_df = get_latest_vulns()
     styled_latest_20_vulns_df = latest_20_vulns_df.style.applymap(colors_4_severity_scores, subset=['Severity'])
+    
     st.markdown("<h1 style='text-align: center; color: #0062AF;'>Common Vulnerabilities and Exposures (CVE) Dashboard</h1>", unsafe_allow_html=True)
     st.markdown(
         '<hr style="border-top: 4px solid #FCCA3A; border-radius: 5px">',
         unsafe_allow_html=True,)
+    
     cve_explenation = st.expander("What is a CVE?")
     cve_explenation.write("""
         Common Vulnerabilities and Exposures (CVE®) is a list of records — each containing an identification number,
@@ -496,26 +503,124 @@ if selected_page == "CVE Data":
         Scores are calculated based on a formula that depends on several metrics that approximate ease of 
         exploit and the impact of exploit. Scores range from 0 to 10, with 10 being the most severe.
         Visit the [Vulnerability Metrics](https://nvd.nist.gov/vuln-metrics/cvss#) to learn more.""")
+    
     st.subheader("Latest 20 Scored Vulnerabilities")
     st.markdown("""
         Source: [National Vulnerability Database (NVD)](https://nvd.nist.gov/)
         """)
     st.dataframe(styled_latest_20_vulns_df, height=400, width=1000)
 
-    tab1, tab2, tab3, tab4 = st.tabs(["Top 20 CVSS by Product", "CVSS Score Distribution", "Weeknesses Types", "CVEs by Year"])
+    tab1, tab2, tab3, tab4 = st.tabs(["Top 50 CVSS by Product", "CVSS Score Distribution", "Weeknesses Types", "CVEs by Year"])
     st.markdown("""<style>
                 .css-b218v0 p {
                     word-break: break-word;
                     margin-bottom: 0px;
                     font-size: 14px;
                     font-size: large;
-                }<style>""", unsafe_allow_html=True)
+                    font-weight: 700;
+                }
+                .st-dq{
+                    gap: 120px;
+                }
+                <style>""", unsafe_allow_html=True)
     with tab1:
-        st.subheader("Top 20 CVSS by Product")
+        def get_cvss_product_table():
+            url = "https://www.cvedetails.com/top-50-product-cvssscore-distribution.php"
+            response = requests.get(url)
+            soup = bs4(response.content, 'html.parser')
+            table = soup.find('table', {'class': 'grid'})
+            if table:
+                rows = table.find_all('tr')
+                products = []
+                vendors = []
+                no_of_vulns = []
+                average_cvss = []
+                for row in rows[1:]:
+                    cells = row.find_all('td')
+                    if len(cells) > 1:
+                        products.append(cells[1].text.strip())
+                        vendors.append(cells[2].text.strip())
+                        no_of_vulns.append(cells[3].text.strip())
+                        average_cvss.append(cells[14].text.strip())
+                df = pd.DataFrame({'Product': products, 'Vendor': vendors, 'No. of Vulns': no_of_vulns, 'Average CVSS': average_cvss})
+                df = df.set_index('Product')
+                
+            return df
         
+        df = get_cvss_product_table()
+        
+        tableCol, pieCol = st.columns([1, 1])
+        
+        with tableCol:
+            st.subheader("Table of Top 50 CVSS by Product")
+            st.markdown("""
+                Source: [CVE Details](https://www.cvedetails.com/top-50-product-cvssscore-distribution.php)
+                """)
+            st.dataframe(df, height=350, width=1000)
+            
+        with pieCol:
+            st.subheader("Total No. Of Vulnerabilities By Vendor")
+            pieChatr = px.pie(df, values='No. of Vulns', hole=.3, names=df.columns[0], hover_data=['Average CVSS'])
+            pieChatr.update_traces(textposition='inside', textinfo = 'label+percent')
+            pieChatr.update_layout(uniformtext_minsize=12)
+            st.plotly_chart(pieChatr, use_container_width=True)
     with tab2:
-        st.subheader("CVSS Score Distribution")
+        def get_cve_score_distrbution():
+            url = "https://www.cvedetails.com/cvss-score-distribution.php"
+            response = requests.get(url)
+            soup = bs4(response.content, 'html.parser')
+            table = soup.find('table', {'class': 'grid'})
+            cvss_scores = []
+            no_of_vulns = []
+            percentage = []
+            if table:
+                rows = table.find_all('tr')
+                for row in rows[1:]:
+                    header = row.find('th')
+                    cells = row.find_all('td')
+                    if len(cells) > 1:
+                        cvss_scores.append(header.text.strip())
+                        no_of_vulns.append(cells[0].text.strip())
+                        percentage.append(cells[1].text.strip())
+                df = pd.DataFrame({'CVSS Score': cvss_scores, 'No. of Vulns': no_of_vulns, 'Percentage': percentage})
+                  
+            return df
         
+        def colors_4_cvss_score(score):
+            if "0-1" in score:
+                return 'background-color: #00C400'
+            elif "1-2" in score:
+                return 'background-color: #00E020'
+            elif "2-3" in score:
+                return 'background-color: #00F000'
+            elif "3-4" in score:
+                return 'background-color: #d1ff00'
+            elif "4-5" in score:
+                return 'background-color: #ffe000'
+            elif "5-6" in score:
+                return 'background-color: #ffcc00'
+            elif "6-7" in score:
+                return 'background-color: #ffbc10'
+            elif "7-8" in score:
+                return 'background-color: #ff9c20'
+            elif "8-9" in score:
+                return 'background-color: #ff8000'
+            elif "9-10" in score:
+                return 'background-color: #ff0000'
+            else:
+                return 'background-color: #EEEEEE'
+            
+        df = get_cve_score_distrbution()
+        styled_df = df.style.applymap(colors_4_cvss_score, subset=['CVSS Score'])
+        
+        tableCol, pieCol = st.columns([1, 1])
+        with tableCol:
+            st.subheader("Table of CVSS Score Distribution")
+            st.markdown("""
+                Source: [CVE Details](https://www.cvedetails.com/cvss-score-distribution.php)
+                """)
+            st.dataframe(styled_df, height=350, width=1000)
+
     with tab3:
         st.subheader("Weeknesses Types")
     
