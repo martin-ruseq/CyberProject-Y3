@@ -683,13 +683,13 @@ if selected_page == "CVE Data":
                 
         df = get_weeknesses()
         
-        st.subheader("CWE Types")
-        
         common_weakness = st.expander("What is *Common Weakness Enumeration (CWE)*?", expanded = False)
         common_weakness.write("""
-            Common Weakness Enumeration (CWE) is a list of software and hardware weaknesses. 
-            It serves as a common language, a measuring stick for security tools,
-            and as a baseline for weakness identification, mitigation, and prevention efforts.
+            **_Common Weakness Enumeration (CWE)_** is a list of software and hardware weaknesses. It serves as a common language, a measuring stick for security tools,
+            and as a baseline for weakness identification, mitigation, and prevention efforts. CWE consists of: 1) a community-developed dictionary of common
+            software and hardware weaknesses; 2) a formal modeling concept that describes the relationships between weaknesses and other factors; and 3) a
+            language-independent software assurance activity specification that can be used to perform software vulnerability detection, mitigation, and prevention.
+            Visit [cwe.mitre.org](https://cwe.mitre.org/about/index.html) for more information.
             """)
         
         base_type = st.expander("What is *Base* weekeness type?", expanded = False)
@@ -700,6 +700,10 @@ if selected_page == "CVE Data":
             [cwe.mitre.org](https://cwe.mitre.org/documents/glossary/index.html#Base%20Weakness) for more information.
             """)
         
+        st.subheader("CWE Types")
+        st.markdown("""
+            Source: [cwe.mitre.org](https://cwe.mitre.org/data/definitions/677.html)
+            """)
         st.dataframe(df, height=350, width=1000)
     
     with tab5:
