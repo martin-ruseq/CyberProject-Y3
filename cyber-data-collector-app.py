@@ -517,7 +517,7 @@ if selected_page == "CVE Data":
     st.dataframe(styled_latest_20_vulns_df, height=400, width=1000)
 
     # Streamlit Tabs for CVE Data Page 
-    tab1, tab2, tab3, tab4, tab5 = st.tabs(["| Top 50 CVSS by Product |", " | CVSS Score Distribution |"," | CVEs by Type / Year |", "| Weeknesses Types |", "| CAPECs: ATT&AT Patters |"])
+    tab1, tab2, tab3, tab4, tab5 = st.tabs(["| Top 50 CVSS by Product |", " | CVSS Score Distribution |"," | CVEs by Type / Year |", "| CWE Types |", "| CAPECs: ATT&AT Patters |"])
     
     # st. markdown is used to diplay text in markdown format, and manipulate the style.
     st.markdown("""<style>
@@ -683,7 +683,7 @@ if selected_page == "CVE Data":
                 
         df = get_weeknesses()
         
-        st.subheader("Weeknesses Types")
+        st.subheader("CWE Types")
         base_type = st.expander("What is *Base* weekeness type?", expanded = False)
         base_type.write("""
             Base is a weakness type that is still mostly independent of a resource or technology, but with sufficient details to provide specific methods for 
