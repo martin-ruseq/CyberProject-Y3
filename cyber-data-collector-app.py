@@ -684,6 +684,14 @@ if selected_page == "CVE Data":
         df = get_weeknesses()
         
         st.subheader("CWE Types")
+        
+        common_weakness = st.expander("What is *Common Weakness Enumeration (CWE)*?", expanded = False)
+        common_weakness.write("""
+            Common Weakness Enumeration (CWE) is a list of software and hardware weaknesses. 
+            It serves as a common language, a measuring stick for security tools,
+            and as a baseline for weakness identification, mitigation, and prevention efforts.
+            """)
+        
         base_type = st.expander("What is *Base* weekeness type?", expanded = False)
         base_type.write("""
             Base is a weakness type that is still mostly independent of a resource or technology, but with sufficient details to provide specific methods for 
@@ -695,7 +703,6 @@ if selected_page == "CVE Data":
         st.dataframe(df, height=350, width=1000)
     
     with tab5:
-        
         
         st.subheader("CAPECs: ATT&CK Patterns")
         
