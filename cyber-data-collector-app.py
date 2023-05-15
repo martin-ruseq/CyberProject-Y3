@@ -20,6 +20,7 @@ st.set_page_config(page_title="CyberHub App", page_icon="⛏️",
 hide_streamlit_style = """
             <style>
             #MainMenu {visibility: hidden;}
+            .css-17es36v {visibility: hidden;}
             .stActionButton {visibility: hidden;}
             </style>
             """ 
@@ -35,6 +36,10 @@ with st.sidebar:
         menu_icon = "cast",
         default_index = 0, # Index of the default option ("Home" in this case)
     )
+    custom_footer = """
+    <footer style="font-family: 'Segoe UI'; font-size: 14px; color: #6C757D; text-align: center; padding: 125px 0px 10px 0px;"><img src="https://cdn-icons-png.flaticon.com/512/4486/4486819.png" width="16" height="16">&nbsp;&nbsp;with ❤️ by 
+    <a href="https://github.com/martin-ruseq" target="_blank">Marcin Rusiecki</a>"""
+    st.markdown(custom_footer, unsafe_allow_html=True)
     
 # Display the selected page    
 if selected_page == "Home":
@@ -658,7 +663,6 @@ if selected_page == "CVE Data":
             cve_type = []
             cve_id = []
             cve_name = []
-            print(table)
             if table:
                 rows = table.find_all('tr')
                 if rows:
