@@ -441,8 +441,6 @@ if selected_page == "Cyber Statistics":
     # END OF CYBERSECURITY MARKET SIZE
     
 if selected_page == "CVE Data":
-    
-    @st.cache_data
     def get_latest_vulns():
         url = "https://nvd.nist.gov/general/nvd-dashboard"
         response = requests.get(url)
@@ -504,13 +502,24 @@ if selected_page == "CVE Data":
         exploit and the impact of exploit. Scores range from 0 to 10, with 10 being the most severe.
         Visit the [Vulnerability Metrics](https://nvd.nist.gov/vuln-metrics/cvss#) to learn more.""")
     
+    capec_explenation = st.expander("What is a CAPEC?")
+    capec_explenation.write("""
+        The Common Attack Pattern Enumeration and Classification (CAPEC™) is publicly available catalog of
+        common attack patterns that helps users understand how adversaries exploit weaknesses in applications
+        and other cyber-enabled capabilities. CAPEC is maintained by the MITRE Corporation and sponsored by
+        the Department of Homeland Security (DHS) Cybersecurity and Infrastructure Security Agency (CISA).
+        Visit the [CAPEC Website](https://capec.mitre.org/about/index.html) to learn more.""")
+    
     st.subheader("Latest 20 Scored Vulnerabilities")
     st.markdown("""
         Source: [National Vulnerability Database (NVD)](https://nvd.nist.gov/)
         """)
     st.dataframe(styled_latest_20_vulns_df, height=400, width=1000)
 
-    tab1, tab2, tab3, tab4 = st.tabs(["Top 50 CVSS by Product", "CVSS Score Distribution", "Weeknesses Types", "CVEs by Year"])
+    # Streamlit Tabs for CVE Data Page 
+    tab1, tab2, tab3, tab4, tab5 = st.tabs(["| Top 50 CVSS by Product |", " | CVSS Score Distribution |"," | CVEs by Type / Year |", "| Weeknesses Types |", "| CAPECs: ATT&AT Patters |"])
+    
+    # st. markdown is used to diplay text in markdown format, and manipulate the style.
     st.markdown("""<style>
                 .css-b218v0 p {
                     word-break: break-word;
@@ -538,7 +547,7 @@ if selected_page == "CVE Data":
                 for row in rows[1:]:
                     cells = row.find_all('td')
                     if len(cells) > 1:
-                        products.append(cells[1].text.strip())
+                        products.append(cells[1].text.strip())  # strip() is used to remove starting and trailing spaces 
                         vendors.append(cells[2].text.strip())
                         no_of_vulns.append(cells[3].text.strip())
                         average_cvss.append(cells[14].text.strip())
@@ -549,8 +558,7 @@ if selected_page == "CVE Data":
         
         df = get_cvss_product_table()
         
-        tableCol, pieCol = st.columns([1, 1])
-        
+        tableCol, pieCol = st.columns([1, 1])   # Create two columns for table and pie chart
         with tableCol:
             st.subheader("Table of Top 50 CVSS by Product")
             st.markdown("""
@@ -568,8 +576,8 @@ if selected_page == "CVE Data":
         def get_cve_score_distrbution():
             url = "https://www.cvedetails.com/cvss-score-distribution.php"
             response = requests.get(url)
-            soup = bs4(response.content, 'html.parser')
-            table = soup.find('table', {'class': 'grid'})
+            soup = bs4(response.content, 'html.parser') 
+            table = soup.find('table', {'class': 'grid'}) 
             cvss_scores = []
             no_of_vulns = []
             percentage = []
@@ -579,13 +587,14 @@ if selected_page == "CVE Data":
                     header = row.find('th')
                     cells = row.find_all('td')
                     if len(cells) > 1:
-                        cvss_scores.append(header.text.strip())
+                        cvss_scores.append(header.text.strip())     
                         no_of_vulns.append(cells[0].text.strip())
                         percentage.append(cells[1].text.strip())
                 df = pd.DataFrame({'CVSS Score': cvss_scores, 'No. of Vulns': no_of_vulns, 'Percentage': percentage})
                   
             return df
         
+        @st.cache_data
         def colors_4_cvss_score(score):
             if "0-1" in score:
                 return 'background-color: #00C400'
@@ -611,21 +620,85 @@ if selected_page == "CVE Data":
                 return 'background-color: #EEEEEE'
             
         df = get_cve_score_distrbution()
-        styled_df = df.style.applymap(colors_4_cvss_score, subset=['CVSS Score'])
+        styled_df = df.style.applymap(colors_4_cvss_score, subset=['CVSS Score'])   # apply the colors_4_cvss_score function to the CVSS Score column
         
-        tableCol, pieCol = st.columns([1, 1])
+        tableCol, barCol = st.columns([1, 1])
         with tableCol:
             st.subheader("Table of CVSS Score Distribution")
             st.markdown("""
                 Source: [CVE Details](https://www.cvedetails.com/cvss-score-distribution.php)
                 """)
             st.dataframe(styled_df, height=350, width=1000)
+        with barCol:
+            st.subheader("Bar Chart of CVSS Score Distribution")
+            barChart = px.bar(
+                df.loc[1:9],    # df.loc[1:9] is used to remove the last row (Total)
+                x='CVSS Score', 
+                y='No. of Vulns',
+                hover_data=['Percentage'],
+                color='CVSS Score',     # differentiate color based on CVSS Score
+                color_discrete_map={    # map the colors to the CVSS Score
+                    "0-1": "#00C400",
+                    "1-2": "#00E020",
+                    "2-3": "#00F000",
+                    "3-4": "#d1ff00",
+                    "4-5": "#ffe000",
+                    "5-6": "#ffcc00",
+                    "6-7": "#ffbc10",
+                    "7-8": "#ff9c20",
+                    "8-9": "#ff8000",
+                    "9-10": "#ff0000"
+                })
+            barChart.update_layout(uniformtext_minsize=12)
+            st.plotly_chart(barChart, use_container_width=True)
+
 
     with tab3:
-        st.subheader("Weeknesses Types")
+        st.subheader("CVEs by Type / Year")
     
     with tab4:
-        st.subheader("CVEs by Year")
+        def get_weeknesses():
+            url = "https://cwe.mitre.org/data/definitions/677.html"
+            response = requests.get(url)
+            soup = bs4(response.content, 'html.parser')
+            table = soup.find('table', {'id': 'Detail'})
+            cve_nature = []
+            cve_type = []
+            cve_id = []
+            cve_name = []
+            print(table)
+            if table:
+                rows = table.find_all('tr')
+                if rows:
+                    for row in rows[1:]:
+                        cells = row.find_all('td')
+                        if len(cells) > 1:
+                            cve_nature.append(cells[0].text.strip())
+                            cve_type.append(cells[1].text.strip())
+                            cve_id.append(cells[2].text.strip())
+                            cve_name.append(cells[3].text.strip())
+                    df = pd.DataFrame({'Nature': cve_nature, 'Type': cve_type, 'ID': cve_id, 'Name': cve_name})
+                    df = df.set_index('ID')
+            return df
+                
+        df = get_weeknesses()
+        
+        st.subheader("Weeknesses Types")
+        base_type = st.expander("What is *Base* weekeness type?", expanded = False)
+        base_type.write("""
+            Base is a weakness type that is still mostly independent of a resource or technology, but with sufficient details to provide specific methods for 
+            detection and prevention. Base level weaknesses typically describe issues in terms of 2 or 3 of the following dimensions: behavior, property, technology,
+            language, and resource. For example, a weakness that describes a property of a resource, such as a file permission error, is a Base weakness. Visit 
+            [cwe.mitre.org](https://cwe.mitre.org/documents/glossary/index.html#Base%20Weakness) for more information.
+            """)
+        
+        st.dataframe(df, height=350, width=1000)
+    
+    with tab5:
+        
+        
+        st.subheader("CAPECs: ATT&CK Patterns")
+        
 
 if selected_page == "About":
     st.title("About")
