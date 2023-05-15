@@ -502,14 +502,6 @@ if selected_page == "CVE Data":
         exploit and the impact of exploit. Scores range from 0 to 10, with 10 being the most severe.
         Visit the [Vulnerability Metrics](https://nvd.nist.gov/vuln-metrics/cvss#) to learn more.""")
     
-    capec_explenation = st.expander("What is a CAPEC?")
-    capec_explenation.write("""
-        The Common Attack Pattern Enumeration and Classification (CAPEC™) is publicly available catalog of
-        common attack patterns that helps users understand how adversaries exploit weaknesses in applications
-        and other cyber-enabled capabilities. CAPEC is maintained by the MITRE Corporation and sponsored by
-        the Department of Homeland Security (DHS) Cybersecurity and Infrastructure Security Agency (CISA).
-        Visit the [CAPEC Website](https://capec.mitre.org/about/index.html) to learn more.""")
-    
     st.subheader("Latest 20 Scored Vulnerabilities")
     st.markdown("""
         Source: [National Vulnerability Database (NVD)](https://nvd.nist.gov/)
@@ -707,6 +699,13 @@ if selected_page == "CVE Data":
         st.dataframe(df, height=350, width=1000)
     
     with tab5:
+        capec_explenation = st.expander("What is a CAPEC?")
+        capec_explenation.write("""
+        The Common Attack Pattern Enumeration and Classification (CAPEC™) is publicly available catalog of
+        common attack patterns that helps users understand how adversaries exploit weaknesses in applications
+        and other cyber-enabled capabilities. CAPEC is maintained by the MITRE Corporation and sponsored by
+        the Department of Homeland Security (DHS) Cybersecurity and Infrastructure Security Agency (CISA).
+        Visit the [CAPEC Website](https://capec.mitre.org/about/index.html) to learn more.""")
         
         st.subheader("CAPECs: ATT&CK Patterns")
         
