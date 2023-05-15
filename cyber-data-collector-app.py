@@ -22,7 +22,7 @@ hide_streamlit_style = """
             #MainMenu {visibility: hidden;}
             footer {visibility: hidden;}
             .stActionButton {visibility: hidden;}
-            .viewerBadge_container__1QSob {display: none;}
+            .viewerBadge_container__1QSob styles_viewerBadge__1yB5_ {display: none;}
             </style>
             """ 
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
