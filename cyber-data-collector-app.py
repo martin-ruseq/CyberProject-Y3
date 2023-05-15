@@ -717,4 +717,4 @@ if selected_page == "About":
 
 if selected_page == "Contact":
     st.title("Contact")
-    st.write("If you have any questions or suggestions, please contact me by [email](mailto:C00263263@itcarlow.ie).") 
+    st.write("If you have any questions or suggestions, you can contact me at [LinkedIn](https://www.linkedin.com/in/marcinrusiecki/).")
