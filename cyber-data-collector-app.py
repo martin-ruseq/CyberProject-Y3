@@ -11,7 +11,8 @@ import plotly.graph_objs as pgo
 from streamlit_option_menu import option_menu
 
 # Set the page title and icon
-st.set_page_config(page_title="CyberHub App", page_icon="⛏️", 
+st.set_page_config(page_title="CyberHub App",
+                   page_icon="⛏️", 
                    layout="wide", 
                    initial_sidebar_state="expanded",
                    )
@@ -29,13 +30,15 @@ st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 # Create a sidebar menu
 with st.sidebar:
     st.sidebar.image("resources/logo.png", use_column_width=True)
+    
     selected_page = option_menu(
         menu_title = "", # Title of the menu
         options = ["Home","Cyber Statistics","CVE Data", "About", "Contact"], # List of options in the menu
         icons = ["house", "bi-bar-chart-line", "bi-shield-exclamation", "info-square", "envelope"], 
         menu_icon = "cast",
         default_index = 0, # Index of the default option ("Home" in this case)
-    )
+        )
+    
     custom_footer = """
     <footer style="font-family: 'Segoe UI'; font-size: 14px; color: #6C757D; text-align: center; padding: 125px 0px 10px 0px;"><img src="https://cdn-icons-png.flaticon.com/512/4486/4486819.png" width="16" height="16">&nbsp;&nbsp;with ❤️ by 
     <a href="https://github.com/martin-ruseq" target="_blank">Marcin Rusiecki</a>"""
@@ -45,12 +48,11 @@ with st.sidebar:
 if selected_page == "Home":
     st.title("Welcome to the CyberHub :wave:")
     st.subheader("*Your cyber statistics in one place* :bar_chart:")
-    st.warning("The app is still in development and more features will be added in the future :wrench: \n\n Please check back later for updates :new: \n\n Thank you for your patience :pray: ")
+    st.warning("The app is still in development and more features will be added in the future :wrench: \n\nPlease check back later for updates :new: \n\nThank you for your patience :pray: ")
     
 if selected_page == "Cyber Statistics":
     
     @st.cache_data  # Caches the function output so that it doesn't have to be rerun everytime the page is refreshed
-    # Fuction to scrape the data from the website
     def get_data(url):
         response = requests.get(url)
         soup = bs4(response.content, "html.parser")
@@ -83,17 +85,14 @@ if selected_page == "Cyber Statistics":
 
             # Check if the row contains data
             if len(cells) > 0:
-                # Get the hacking methods
-                methods = cells[0].text.strip()
-
-                # Get the percentage of the hacking methods
-                percentage = cells[1].text.strip()
-
-                # Append the data to the lists
-                methods_list.append(methods)
+                methods = cells[0].text.strip()         # Get the hacking methods
+                percentage = cells[1].text.strip()      # Get the percentage of the hacking methods
+                methods_list.append(methods)            # Append the methods to the list
                 percentage_list.append(percentage)
 
-        # START OF THE GLOBAL HACKING METHODS DATA
+
+        # --------------------- GLOBAL HACKING METHODS --------------------- #
+        
         st.title("Global Hacking Methods")
         st.markdown("""
             This chart/table shows the percentage of the leading global hacking methods.
@@ -125,6 +124,7 @@ if selected_page == "Cyber Statistics":
                     coloraxis=None,
                 ),
             )) 
+            
             # Update the layout of the chart to make it look better
             hack_methods_2019.update_layout(
                 xaxis = dict(showgrid = True, gridwidth = 1, gridcolor = '#E5E5E5'),
@@ -135,6 +135,7 @@ if selected_page == "Cyber Statistics":
                 width = 1000,
                 margin = dict(l = 0, r = 0, t = 60, b = 0),
             )
+            
             # Display the chart using Plotly
             st.plotly_chart(hack_methods_2019)
             
@@ -144,29 +145,41 @@ if selected_page == "Cyber Statistics":
                 
                 # Generate CSV download button
                 with csv_column:
-                    csv = pd.DataFrame({'Method': methods_list, 'Percentage': percentage_list}).to_csv(index=False)
+                    csv = pd.DataFrame({
+                        'Method': methods_list,
+                        'Percentage': percentage_list}
+                        ).to_csv(index=False)       # Convert the dataframe to a CSV file
+                    
                     csv_btn = st.download_button(
                         label="Download as CSV",
                         help="Click here to download the data as a CSV file",
-                        data=bytes(csv, encoding='utf8'),
+                        data=bytes(csv, encoding='utf8'),       # csv must be encoded to bytes for download button to work
                         file_name="hacking-methods-cyberhub.csv",
                         mime="text/csv",
                     )
                 
                 # Generate JSON download button
                 with json_column:
-                    json = pd.DataFrame({'Method': methods_list, 'Percentage': percentage_list}).to_json(orient='records')
+                    json = pd.DataFrame({
+                        'Method': methods_list,
+                        'Percentage': percentage_list}
+                        ).to_json(orient='records')     # Convert the dataframe to a JSON file
+                    
                     json_btn = st.download_button(
-                        label="Download as JSON",
-                        help="Click here to download the data as a JSON file",
-                        data=bytes(json, encoding='utf8'),
-                        file_name="hacking-methods-cyberhub.json",
-                        mime="text/json",
+                        label = "Download as JSON",
+                        help = "Click here to download the data as a JSON file",
+                        data = bytes(json, encoding='utf8'),
+                        file_name = "hacking-methods-cyberhub.json",
+                        mime = "text/json",     # specifys the category of the file, so the system knows how to handle it
                     )
                 
                 # Generate HTML download button
                 with html_column:
-                    html = pd.DataFrame({'Method': methods_list, 'Percentage': percentage_list}).to_html(index=False)
+                    html = pd.DataFrame({
+                        'Method': methods_list,
+                        'Percentage': percentage_list}
+                        ).to_html(index=False)    # Convert the dataframe to a HTML file
+                    
                     html_btn = st.download_button(
                         label="Download as HTML",
                         help="Click here to download the data as a HTML file",
@@ -195,9 +208,12 @@ if selected_page == "Cyber Statistics":
     st.markdown(
         '<hr style="border-top: 4px solid #FCCA3A; border-radius: 5px">',
         unsafe_allow_html=True,)
-    # END OF THE GLOBAL HACKING METHODS DATA
+    
+    # -------------------- END GLOBAL HACKING METHODS DATA-------------------- #
 
-    # START OF THE LEGAL CASES UNDER COMPUTER MISUSE ACT 1990 (UK) DATA
+
+    # -------------------- LEGAL CASES UNDER COMPUTER MISUSE ACT 1990 (UK) DATA -------------------- #
+    
     st.title("Legal Cases under Computer Misuse Act 1990 (UK) as of 2021")
     st.markdown("""
         This table shows the number of legal cases under the Computer Misuse Act 1990 in different years.
@@ -206,11 +222,11 @@ if selected_page == "Cyber Statistics":
         """)
     
     @st.cache_data
-    # Fuction to scrapes data from website and creates a table with Coputer Misuse Act cases
     def case_table(url, selected_year):
         response = requests.get(url)
         soup = bs4(response.content, 'html.parser')
         table = soup.find('table', attrs={'dir': 'LTR'})
+        
         if table:
             rows = table.find_all('tr')
             if rows:
@@ -227,6 +243,7 @@ if selected_page == "Cyber Statistics":
                             cases_list.append(cases)
                             year_list.append(year)
                             case_description_list.append(case_description)
+                            
                 cases_df = pd.DataFrame({'Case': cases_list, 'Year': year_list, 'Description': case_description_list})
                 cases_df.index = cases_df.index + 1
                 
@@ -243,9 +260,12 @@ if selected_page == "Cyber Statistics":
     st.markdown(
         '<hr style="border-top: 4px solid #FCCA3A; border-radius: 5px">',
         unsafe_allow_html=True,)
-    # END OF LEGAL CASES DATA
     
-    # START OF CYBERCRIME DAMAGES DATA
+    # -------------------- END LEGAL CASES UNDER COMPUTER MISUSE ACT 1990 (UK) DATA -------------------- #
+    
+    
+    # -------------------- MONETARY DAMAGES CAUSED BY CYBERCRIMES REPORTED TO IC3 DATA -------------------- #
+    
     st.title("Monetary Damages caused by Cybercrimes reported to IC3 form 2001 to 2022")
     st.subheader("*(in million U.S. dollars)*")
     st.markdown("""
@@ -289,16 +309,20 @@ if selected_page == "Cyber Statistics":
                 dtick=1, 
             ),
             yaxis_title="Damages (in million U.S. dollars)",
-            font=dict(size = 16),
-            
+            font=dict(size = 16),  
         )
+        
         return graph
     
     def download_btns_damages_data(damages_list, years_list):
         csv_column, json_column, html_column = st.columns(3, gap = "small")
 
         with csv_column:
-            csv = pd.DataFrame({'Years': years_list, 'Damages': damages_list}).to_csv(index=False)
+            csv = pd.DataFrame({
+                'Years': years_list,
+                'Damages': damages_list}
+                ).to_csv(index=False)
+            
             csv_btn = st.download_button(
                 label="Download as CSV",
                 help="Click here to download the data as CSV file",
@@ -306,8 +330,13 @@ if selected_page == "Cyber Statistics":
                 file_name="cybercrime-costs-ic3-cyberhub.csv",
                 mime="text/csv"
             )
+            
         with json_column:
-            json = pd.DataFrame({'Years': years_list, 'Damages': damages_list}).to_json(orient='records')
+            json = pd.DataFrame({
+                'Years': years_list,
+                'Damages': damages_list}
+                ).to_json(orient='records')
+            
             json_btn = st.download_button(
                 label="Download as JSON",
                 help="Click here to download the data as JSON file",
@@ -315,8 +344,13 @@ if selected_page == "Cyber Statistics":
                 file_name="cybercrime-costs-ic3-cyberhub.json",
                 mime="application/json"
             )
+            
         with html_column:
-            html = pd.DataFrame({'Years': years_list, 'Damages': damages_list}).to_html(index=False)
+            html = pd.DataFrame({
+                'Years': years_list,
+                'Damages': damages_list}
+                ).to_html(index=False)
+            
             html_btn = st.download_button(
                 label="Download as HTML",
                 help="Click here to download the data as HTML file",
@@ -324,26 +358,35 @@ if selected_page == "Cyber Statistics":
                 file_name="cybercrime-costs-ic3-cyberhub.html",
                 mime="text/html"
             )
+            
         return csv_btn, json_btn, html_btn
     
     dmg_view = st.selectbox("Select View Type:", ["Line", "Table"])
     
     if dmg_view == "Line":
         st.plotly_chart(create_damages_graph(damages_df[0]))
+        
         st.markdown("*Download the data:*\n\n")
         csv_dmg, json_dmg, html_dmg = download_btns_damages_data(damages_list, yeas_list)
+        
         st.markdown(
             '<hr style="border-top: 4px solid #FCCA3A; border-radius: 5px">',
             unsafe_allow_html=True,)
+        
     elif dmg_view == "Table":
         st.dataframe(damages_df[0], height=500, width=1000)
+        
         st.info("To download the data, please select the Line view type")
+        
         st.markdown(
             '<hr style="border-top: 4px solid #FCCA3A; border-radius: 5px">',
             unsafe_allow_html=True,)
-    # END OF CYBERCRIME DAMAGES DATA
         
-    # START OF CYBERSECURITY MARKET SIZE DATA
+    # -------------------- END MONETARY DAMAGES CAUSED BY CYBERCRIMES REPORTED TO IC3 DATA -------------------- #
+        
+        
+    # -------------------- CYBERSECURITY MARKET SIZE WORLDWIDE 2019-2030 DATA -------------------- #
+    
     st.title("Cybersecurity market size worldwide 2019-2030")
     st.subheader("*(in billion U.S. dollars)*")
     st.markdown("""
@@ -361,6 +404,7 @@ if selected_page == "Cyber Statistics":
     def make_cyber_market_df(cyber_market_table):
         cyber_market_list = []
         years_list = []
+        
         for row in cyber_market_table.find_all('tr'):
             cells = row.find_all('td')
             if len(cells) > 1:
@@ -368,7 +412,10 @@ if selected_page == "Cyber Statistics":
                 years = cells[0].text.strip()
                 cyber_market_list.append(cyber_market)
                 years_list.append(years)
-        cyber_market_df = pd.DataFrame({'Years': years_list, 'Cyber Market': cyber_market_list})
+                
+        cyber_market_df = pd.DataFrame({
+            'Years': years_list,
+            'Cyber Market': cyber_market_list})
         
         return cyber_market_df, cyber_market_list, years_list
     
@@ -383,8 +430,7 @@ if selected_page == "Cyber Statistics":
             y="Cyber Market", orientation='v', 
             color="Cyber Market", 
             color_discrete_sequence=px.colors.cmocean.thermal_r, 
-            labels={"Cyber Market": "Cyber Market (in billion U.S. dollars)"}
-            )
+            labels={"Cyber Market": "Cyber Market (in billion U.S. dollars)"})
         
         barchart.update_layout(
             showlegend=False,
@@ -397,7 +443,11 @@ if selected_page == "Cyber Statistics":
         cvs_column, json_column, html_column = st.columns(3, gap = "small")
         
         with cvs_column:
-            csv = pd.DataFrame({'Years': years_list, 'Cyber Market': cyber_market_list}).to_csv(index=False)
+            csv = pd.DataFrame({
+                'Years': years_list,
+                'Cyber Market': cyber_market_list}
+                ).to_csv(index=False)
+            
             csv_btn = st.download_button(
                 label="Download as CSV",
                 help="Click here to download the data as CSV file",
@@ -406,7 +456,11 @@ if selected_page == "Cyber Statistics":
                 mime="text/csv"
             )
         with json_column:
-            json = pd.DataFrame({'Years': years_list, 'Cyber Market': cyber_market_list}).to_json(orient='records')
+            json = pd.DataFrame({
+                'Years': years_list,
+                'Cyber Market': cyber_market_list}
+                ).to_json(orient='records')
+            
             json_btn = st.download_button(
                 label="Download as JSON",
                 help="Click here to download the data as JSON file",
@@ -415,7 +469,11 @@ if selected_page == "Cyber Statistics":
                 mime="application/json"
             )
         with html_column:
-            html = pd.DataFrame({'Years': years_list, 'Cyber Market': cyber_market_list}).to_html(index=False)
+            html = pd.DataFrame({
+                'Years': years_list,
+                'Cyber Market': cyber_market_list}
+                ).to_html(index=False)
+            
             html_btn = st.download_button(
                 label="Download as HTML",
                 help="Click here to download the data as HTML file",
@@ -425,25 +483,31 @@ if selected_page == "Cyber Statistics":
             )
         return csv_btn, json_btn, html_btn
         
-
     cyber_marker_view = st.selectbox("Select View Type:", ["Vertical Bar Chart", "Table"])
     
     if cyber_marker_view == "Vertical Bar Chart":
         st.write(create_cyber_market_barchart(cyber_market_df[0]))
+        
         st.info("The dates with asterisk (*) are the projected dates")
+        
         st.markdown("*Download the data:*\n\n")
         csv_cyber_market, json_cyber_market, html_cyber_market = download_btns_cyber_market_data(cyber_market_list, years_list)
+        
         st.markdown(
             '<hr style="border-top: 4px solid #FCCA3A; border-radius: 5px">',
             unsafe_allow_html=True,)
+        
     elif cyber_marker_view == "Table":
         st.dataframe(cyber_market_df[0], height=400, width=1000)
+        
         st.info("The dates with asterisk (*) are the projected dates")
         st.info("To download the data, please select the Vertical Bar Chart view type")
+        
         st.markdown(
             '<hr style="border-top: 4px solid #FCCA3A; border-radius: 5px">',
             unsafe_allow_html=True,)
-    # END OF CYBERSECURITY MARKET SIZE
+        
+    # -------------------------- END CYBER MARKET SIZE WORDLWIDE -------------------------- #
     
 if selected_page == "CVE Data":
     def get_latest_vulns():
@@ -511,10 +575,16 @@ if selected_page == "CVE Data":
     st.markdown("""
         Source: [National Vulnerability Database (NVD)](https://nvd.nist.gov/)
         """)
+    
     st.dataframe(styled_latest_20_vulns_df, height=400, width=1000)
 
     # Streamlit Tabs for CVE Data Page 
-    tab1, tab2, tab3, tab4, tab5 = st.tabs(["| Top 50 CVSS by Product |", " | CVSS Score Distribution |"," | CVEs by Years / Types |", "| Weaknesses Types |", "| CAPECs: ATT&AT Patters |"])
+    tab1, tab2, tab3, tab4, tab5 = st.tabs(
+        ["| Top 50 CVSS by Product |",
+         "| CVSS Score Distribution |", 
+         "| CVEs by Years / Types |",
+         "| Weaknesses Types |",
+         "| CAPECs: ATT&AT Patters |"])
     
     # st. markdown is used to diplay text in markdown format, and manipulate the style.
     st.markdown("""<style>
@@ -535,6 +605,7 @@ if selected_page == "CVE Data":
             response = requests.get(url)
             soup = bs4(response.content, 'html.parser')
             table = soup.find('table', {'class': 'grid'})
+            
             if table:
                 rows = table.find_all('tr')
                 products = []
@@ -548,6 +619,7 @@ if selected_page == "CVE Data":
                         vendors.append(cells[2].text.strip())
                         no_of_vulns.append(cells[3].text.strip())
                         average_cvss.append(cells[14].text.strip())
+                        
                 df = pd.DataFrame({'Product': products, 'Vendor': vendors, 'No. of Vulns': no_of_vulns, 'Average CVSS': average_cvss})
                 df = df.set_index('Product')
                 
@@ -556,11 +628,13 @@ if selected_page == "CVE Data":
         df = get_cvss_product_table()
         
         tableCol, pieCol = st.columns([1, 1])   # Create two columns for table and pie chart
+        
         with tableCol:
             st.subheader("Table of Top 50 CVSS by Product")
             st.markdown("""
                 Source: [CVE Details](https://www.cvedetails.com/top-50-product-cvssscore-distribution.php)
                 """)
+            
             st.dataframe(df, height=350, width=1000)
             
         with pieCol:
@@ -573,11 +647,13 @@ if selected_page == "CVE Data":
                 hole=.3, names=df.columns[0], 
                 hover_data=['Average CVSS']
                 )
+            
             pieChatr.update_traces(
                 textposition='inside',
                 textinfo = 'label+percent',
                 insidetextorientation='radial',
                 )
+            
             pieChatr.update_layout(uniformtext_minsize=12)
             
             st.plotly_chart(
@@ -590,9 +666,11 @@ if selected_page == "CVE Data":
             response = requests.get(url)
             soup = bs4(response.content, 'html.parser') 
             table = soup.find('table', {'class': 'grid'}) 
+            
             cvss_scores = []
             no_of_vulns = []
             percentage = []
+            
             if table:
                 rows = table.find_all('tr')
                 for row in rows[1:]:
@@ -602,6 +680,7 @@ if selected_page == "CVE Data":
                         cvss_scores.append(header.text.strip())     
                         no_of_vulns.append(cells[0].text.strip())
                         percentage.append(cells[1].text.strip())
+                        
                 df = pd.DataFrame(
                     {'CVSS Score': cvss_scores,
                      'No. of Vulns': no_of_vulns,
@@ -636,7 +715,6 @@ if selected_page == "CVE Data":
                 return 'background-color: #EEEEEE'
             
         df = get_cve_score_distrbution()
-        
         styled_df = df.style.applymap(colors_4_cvss_score, subset=['CVSS Score'])  # apply the colors_4_cvss_score function to the CVSS Score column
         
         tableCol, barCol = st.columns([1, 1])
@@ -646,6 +724,7 @@ if selected_page == "CVE Data":
             st.markdown("""
                 Source: [CVE Details](https://www.cvedetails.com/cvss-score-distribution.php)
                 """)
+            
             st.dataframe(
                 styled_df,
                 height=350,
@@ -654,6 +733,7 @@ if selected_page == "CVE Data":
             
         with barCol:
             st.subheader("Bar Chart of CVSS Score Distribution")
+            
             barChart = px.bar(
                 df.loc[1:9],                # df.loc is used to select the rows from 1 to 9 (excluding 10)
                 x='CVSS Score', 
@@ -672,6 +752,7 @@ if selected_page == "CVE Data":
                     "8-9": "#ff8000",
                     "9-10": "#ff0000"
                 })
+            
             barChart.update_layout(uniformtext_minsize=12)
             
             st.plotly_chart(barChart, use_container_width=True)
@@ -886,8 +967,6 @@ if selected_page == "CVE Data":
             chained together to accomplish a goal.
             """)
             
-            
-        
         st.subheader("CAPECs: ATT&CK Patterns")
         st.markdown("""
             Source: [capec.mitre.org](https://capec.mitre.org/data/definitions/658.html)
@@ -896,7 +975,6 @@ if selected_page == "CVE Data":
         df = get_capecs_()
         st.dataframe(df, height=350, width=1000)
         
-
 if selected_page == "About":
     st.title("About")
     st.write("This app was created to collect cyber data from various sources and visualize it in one place. The data is collected using Python and the visualization is done using Streamlit. The app is still in development and more features will be added in the future.")
