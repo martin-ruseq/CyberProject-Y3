@@ -514,7 +514,7 @@ if selected_page == "CVE Data":
     st.dataframe(styled_latest_20_vulns_df, height=400, width=1000)
 
     # Streamlit Tabs for CVE Data Page 
-    tab1, tab2, tab3, tab4, tab5 = st.tabs(["| Top 50 CVSS by Product |", " | CVSS Score Distribution |"," | CVEs by Type / Year |", "| CWE Types |", "| CAPECs: ATT&AT Patters |"])
+    tab1, tab2, tab3, tab4, tab5 = st.tabs(["| Top 50 CVSS by Product |", " | CVSS Score Distribution |"," | CVEs by Years / Types |", "| Weaknesses Types |", "| CAPECs: ATT&AT Patters |"])
     
     # st. markdown is used to diplay text in markdown format, and manipulate the style.
     st.markdown("""<style>
@@ -565,10 +565,25 @@ if selected_page == "CVE Data":
             
         with pieCol:
             st.subheader("Total No. Of Vulnerabilities By Vendor")
-            pieChatr = px.pie(df, values='No. of Vulns', hole=.3, names=df.columns[0], hover_data=['Average CVSS'])
-            pieChatr.update_traces(textposition='inside', textinfo = 'label+percent')
+            
+            pieChatr = px.pie(
+                df, 
+                values='No. of Vulns',
+                color_discrete_sequence=px.colors.cyclical.IceFire,
+                hole=.3, names=df.columns[0], 
+                hover_data=['Average CVSS']
+                )
+            pieChatr.update_traces(
+                textposition='inside',
+                textinfo = 'label+percent',
+                insidetextorientation='radial',
+                )
             pieChatr.update_layout(uniformtext_minsize=12)
-            st.plotly_chart(pieChatr, use_container_width=True)
+            
+            st.plotly_chart(
+                pieChatr,
+                use_container_width=True
+                )
     with tab2:
         def get_cve_score_distrbution():
             url = "https://www.cvedetails.com/cvss-score-distribution.php"
@@ -587,7 +602,11 @@ if selected_page == "CVE Data":
                         cvss_scores.append(header.text.strip())     
                         no_of_vulns.append(cells[0].text.strip())
                         percentage.append(cells[1].text.strip())
-                df = pd.DataFrame({'CVSS Score': cvss_scores, 'No. of Vulns': no_of_vulns, 'Percentage': percentage})
+                df = pd.DataFrame(
+                    {'CVSS Score': cvss_scores,
+                     'No. of Vulns': no_of_vulns,
+                     'Percentage': percentage}
+                    )
                   
             return df
         
@@ -617,24 +636,31 @@ if selected_page == "CVE Data":
                 return 'background-color: #EEEEEE'
             
         df = get_cve_score_distrbution()
-        styled_df = df.style.applymap(colors_4_cvss_score, subset=['CVSS Score'])   # apply the colors_4_cvss_score function to the CVSS Score column
+        
+        styled_df = df.style.applymap(colors_4_cvss_score, subset=['CVSS Score'])  # apply the colors_4_cvss_score function to the CVSS Score column
         
         tableCol, barCol = st.columns([1, 1])
+        
         with tableCol:
             st.subheader("Table of CVSS Score Distribution")
             st.markdown("""
                 Source: [CVE Details](https://www.cvedetails.com/cvss-score-distribution.php)
                 """)
-            st.dataframe(styled_df, height=350, width=1000)
+            st.dataframe(
+                styled_df,
+                height=350,
+                width=1000,
+                )
+            
         with barCol:
             st.subheader("Bar Chart of CVSS Score Distribution")
             barChart = px.bar(
-                df.loc[1:9],    # df.loc[1:9] is used to remove the last row (Total)
+                df.loc[1:9],                # df.loc is used to select the rows from 1 to 9 (excluding 10)
                 x='CVSS Score', 
                 y='No. of Vulns',
                 hover_data=['Percentage'],
-                color='CVSS Score',     # differentiate color based on CVSS Score
-                color_discrete_map={    # map the colors to the CVSS Score
+                color='CVSS Score',         # differentiate color based on CVSS Score
+                color_discrete_map = {      # map the colors to the CVSS Score
                     "0-1": "#00C400",
                     "1-2": "#00E020",
                     "2-3": "#00F000",
@@ -647,56 +673,156 @@ if selected_page == "CVE Data":
                     "9-10": "#ff0000"
                 })
             barChart.update_layout(uniformtext_minsize=12)
+            
             st.plotly_chart(barChart, use_container_width=True)
 
-
     with tab3:
-        st.subheader("CVEs by Type / Year")
+        def get_cves_type_year():
+            url = "https://www.cvedetails.com/vulnerabilities-by-types.php"
+            response = requests.get(url)
+            soup = bs4(response.content, 'html.parser')
+            table = soup.find('table', {'class': 'stats'})
+            
+            years = []
+            no_of_vulns = []
+            dos = []
+            exec_code = []
+            overflow = []
+            mem_corruption = []
+            sqli = []
+            xss = []
+            dir_traversal = []
+            http_resp_split = []
+            bypass = []
+            gain_info = []
+            gain_priv = []
+            csrf = []
+            file_inc = []
+            no_of_exploits = []
+            
+            if table:
+                rows = table.find_all('tr')
+                for row in rows[1:-1]:
+                    header = row.find('th')
+                    cells = row.find_all('td')
+                    if len(cells) > 1:
+                        years.append(header.text.strip())
+                        no_of_vulns.append(cells[0].text.strip())
+                        dos.append(cells[1].text.strip())
+                        exec_code.append(cells[2].text.strip())
+                        overflow.append(cells[3].text.strip())
+                        mem_corruption.append(cells[4].text.strip())
+                        sqli.append(cells[5].text.strip())
+                        xss.append(cells[6].text.strip())
+                        dir_traversal.append(cells[7].text.strip())
+                        http_resp_split.append(cells[8].text.strip())
+                        bypass.append(cells[9].text.strip())
+                        gain_info.append(cells[10].text.strip())
+                        gain_priv.append(cells[11].text.strip())
+                        csrf.append(cells[12].text.strip())
+                        file_inc.append(cells[13].text.strip())
+                        no_of_exploits.append(cells[14].text.strip())
+                        
+                df = pd.DataFrame(
+                    {'Year': years,
+                     'No. of Vulns.': no_of_vulns,
+                     'DoS': dos,
+                     'Code Exe.': exec_code,
+                     'Overflow': overflow,
+                     'Mem. Corrupt.': mem_corruption,
+                     'SQLi': sqli,
+                     'XSS': xss,
+                     'Dir. Traversal': dir_traversal,
+                     'HTTP Resp. Split': http_resp_split,
+                     'Bypass': bypass,
+                     'Gain Info.': gain_info,
+                     'Gain Priv.': gain_priv,
+                     'CSRF': csrf,
+                     'File Inc.': file_inc,
+                     'No. of Exploits': no_of_exploits}
+                    )
+                
+                df = df.set_index('Year')
+                
+            return df
+           
+        tableTab, pieChartTab = st.columns([1, 1])
+        
+        with tableTab:
+            st.subheader("CVEs by Year / Type")
+            st.markdown("""
+                Source: [CVE Details](https://www.cvedetails.com/vulnerabilities-by-types.php)
+                """)
+            
+            df = get_cves_type_year()
+            
+            st.dataframe(df, height=380, width=485)
+        
+        with pieChartTab:
+            st.subheader("Pie Chart of CVEs by Type")
+            
+            pieChart = px.pie(
+                df, 
+                values=df.loc['Total'][1:14],   # uses the "Total" row and excludes the first column (which is the "No. of Vulns." column)
+                                                # and the last column (which is the "No. of Exploits" column)
+                names=df.columns[1:14], 
+                color_discrete_sequence=px.colors.cyclical.IceFire,
+                hole=0.3,
+            )
+            
+            pieChart.update_traces(textposition='inside', textinfo='percent+label',insidetextorientation='radial')
+            pieChart.update_layout(uniformtext_minsize=12)
+            
+            st.plotly_chart(pieChart, use_container_width=True, width=200)
     
     with tab4:
+        @st.cache_data
         def get_weeknesses():
             url = "https://cwe.mitre.org/data/definitions/677.html"
             response = requests.get(url)
             soup = bs4(response.content, 'html.parser')
             table = soup.find('table', {'id': 'Detail'})
-            cve_nature = []
+            
             cve_type = []
             cve_id = []
             cve_name = []
+            
             if table:
                 rows = table.find_all('tr')
                 if rows:
                     for row in rows[1:]:
                         cells = row.find_all('td')
                         if len(cells) > 1:
-                            cve_nature.append(cells[0].text.strip())
-                            cve_type.append(cells[1].text.strip())
+                            cve_type.append(cells[1].text.strip()[:4])
                             cve_id.append(cells[2].text.strip())
                             cve_name.append(cells[3].text.strip())
-                    df = pd.DataFrame({'Nature': cve_nature, 'Type': cve_type, 'ID': cve_id, 'Name': cve_name})
+                            
+                    df = pd.DataFrame(
+                        {'Type': cve_type,
+                         'ID': cve_id,
+                         'Name': cve_name}
+                        )
+                    
                     df = df.set_index('ID')
+                    
             return df
                 
         df = get_weeknesses()
         
-        common_weakness = st.expander("What is *Common Weakness Enumeration (CWE)*?", expanded = False)
+        common_weakness = st.expander("What is *Common Weakness Enumeration (CWE&#8482;)*?", expanded = False)
         common_weakness.write("""
-            **_Common Weakness Enumeration (CWE)_** is a list of software and hardware weaknesses. It serves as a common language, a measuring stick for security tools,
-            and as a baseline for weakness identification, mitigation, and prevention efforts. CWE consists of: 1) a community-developed dictionary of common
-            software and hardware weaknesses; 2) a formal modeling concept that describes the relationships between weaknesses and other factors; and 3) a
-            language-independent software assurance activity specification that can be used to perform software vulnerability detection, mitigation, and prevention.
-            Visit [cwe.mitre.org](https://cwe.mitre.org/about/index.html) for more information.
+            **_Common Weakness Enumeration (CWE&#8482;)_** is a list or dictionary of weaknesses that are often found in software and hardware.
+            The list describes the types of weaknesses that can lead to security vulnerabilities and provides guidance on how to identify,
+            mitigate, and prevent them. Visit [cwe.mitre.org](https://cwe.mitre.org/about/index.html) for more information.
             """)
         
-        base_type = st.expander("What is *Base* weekeness type?", expanded = False)
+        base_type = st.expander("What is *Base* weakeness type?", expanded = False)
         base_type.write("""
-            Base is a weakness type that is still mostly independent of a resource or technology, but with sufficient details to provide specific methods for 
-            detection and prevention. Base level weaknesses typically describe issues in terms of 2 or 3 of the following dimensions: behavior, property, technology,
-            language, and resource. For example, a weakness that describes a property of a resource, such as a file permission error, is a Base weakness. Visit 
-            [cwe.mitre.org](https://cwe.mitre.org/documents/glossary/index.html#Base%20Weakness) for more information.
+            The **Base** is weakness that is still mostly independent of a resource or technology, but with sufficient details
+            to provide specific methods for detection and prevention. Visit [cwe.mitre.org](https://cwe.mitre.org/documents/glossary/index.html#Base%20Weakness) for more information.
             """)
         
-        st.subheader("CWE Types")
+        st.subheader("Table of CWE&#8482; Types ")
         st.markdown("""
             Source: [cwe.mitre.org](https://cwe.mitre.org/data/definitions/677.html)
             """)
@@ -705,7 +831,7 @@ if selected_page == "CVE Data":
     with tab5:
         capec_explenation = st.expander("What is a CAPEC?")
         capec_explenation.write("""
-        The Common Attack Pattern Enumeration and Classification (CAPEC™) is publicly available catalog of
+        The **Common Attack Pattern Enumeration and Classification (CAPEC™)** is publicly available catalog of
         common attack patterns that helps users understand how adversaries exploit weaknesses in applications
         and other cyber-enabled capabilities. CAPEC is maintained by the MITRE Corporation and sponsored by
         the Department of Homeland Security (DHS) Cybersecurity and Infrastructure Security Agency (CISA).
