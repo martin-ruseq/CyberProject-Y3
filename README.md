@@ -27,5 +27,8 @@ Please note that this project has a Code of Conduct. By participating in this pr
 ## Contributing :handshake:
 Here you can find the [Contributing Guidelines](./CONTRIBUTING.md) for this project.
 
+## Security Policy :judge:
+Here you can find the [Security Policy](./SECURITY.md) for this project.
+
 ## License :page_facing_up:
 This project is licensed under the MPL v2. See the [LICENSE](LICENSE) file for more information.
