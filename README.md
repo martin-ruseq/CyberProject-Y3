@@ -22,7 +22,7 @@ As you may have noticed, the application will present the data in the form of ch
 [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://cyberproject-marcinrusiecki.streamlit.app/)
  
 ## Code of Conduct :scroll:
-Please note that this project has a Code of Conduct. By participating in this project, you agree to abide by its terms. See the [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md) file for more information.
+Please note that this project has a Code of Conduct. By participating in this project, you agree to abide by its terms. See the [Conduct Of Code](./CODE_OF_CONDUCT.md) for more information.
 
 ## Contributing :handshake:
 Here you can find the [Contributing Guidelines](./CONTRIBUTING.md) for this project.
