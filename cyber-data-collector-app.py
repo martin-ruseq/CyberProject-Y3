@@ -462,7 +462,7 @@ if selected_page == "CVE Data":
                 'CVE ID': li.div.find('a').text.strip(),
                 'Description': li.div.find('strong').next_sibling.strip().strip(' - '),
                 'Severity': li.select_one('span', {'id': 'cvss*'}).text.strip()[5:],
-                'Published': li.select_one('strong:contains("Published")').next_sibling.strip().split(';')[0].strip(),
+                'Published': li.select_one('strong:contains("Published")').next_sibling.strip().split(';')[0].strip(),  # displays the text until the first semicolon (;)
                 'CVE URL': 'https://nvd.nist.gov' + li.div.find('a')['href'],
             }
             latest_20_vulns.append(vuln)
@@ -793,7 +793,7 @@ if selected_page == "CVE Data":
                     for row in rows[1:]:
                         cells = row.find_all('td')
                         if len(cells) > 1:
-                            cve_type.append(cells[1].text.strip()[:4])
+                            cve_type.append(cells[1].text.strip()[:4])  # only get the first 4 characters of the type (which is "Base")
                             cve_id.append(cells[2].text.strip())
                             cve_name.append(cells[3].text.strip())
                             
@@ -806,8 +806,6 @@ if selected_page == "CVE Data":
                     df = df.set_index('ID')
                     
             return df
-                
-        df = get_weeknesses()
         
         common_weakness = st.expander("What is *Common Weakness Enumeration (CWE&#8482;)*?", expanded = False)
         common_weakness.write("""
@@ -826,9 +824,40 @@ if selected_page == "CVE Data":
         st.markdown("""
             Source: [cwe.mitre.org](https://cwe.mitre.org/data/definitions/677.html)
             """)
+        
+        df = get_weeknesses()
         st.dataframe(df, height=350, width=1000)
     
     with tab5:
+        def get_capecs_():
+            url = "https://capec.mitre.org/data/definitions/658.html"
+            respones = requests.get(url)
+            soup = bs4(respones.content, 'html.parser')
+            table = soup.find('table', {'id': 'Detail'})
+            
+            capec_type = []
+            capec_id = []
+            capec_name = []
+            
+            if table:
+                rows = table.find_all('tr')
+                for row in rows[1:]:
+                    cells = row.find_all('td')
+                    if len(cells) > 1:
+                        capec_type.append(cells[1].text.strip().split('-')[0].strip())  # displays the first part of the text (up to the dash)
+                        capec_id.append(cells[2].text.strip())
+                        capec_name.append(cells[3].text.strip())
+                        
+                df = pd.DataFrame({
+                    'Type': capec_type,
+                    'ID': capec_id,
+                    'Name': capec_name}
+                    )
+                
+                df = df.set_index('ID')
+                
+            return df
+                    
         capec_explenation = st.expander("What is a CAPEC?")
         capec_explenation.write("""
         The **Common Attack Pattern Enumeration and Classification (CAPEC™)** is publicly available catalog of
@@ -837,7 +866,35 @@ if selected_page == "CVE Data":
         the Department of Homeland Security (DHS) Cybersecurity and Infrastructure Security Agency (CISA).
         Visit the [CAPEC Website](https://capec.mitre.org/about/index.html) to learn more.""")
         
+        attack_patterns_types = st.expander("What are the types of attack patterns?")
+        attack_patterns_types.write("""
+            *"An attack pattern is the common approach and attributes related to the exploitation of a weakness 
+            in a software, firmware, hardware, or service component"*
+            
+            There are three types of attack patterns:                 
+                                    
+            **Standard Attack Patterns** - A standard attack pattern is meant to provide sufficient details to
+            understand the specific technique and how it attempts to accomplish a desired goal.
+            
+            **Meta Attack Patterns**- A meta attack pattern is often void of a specific technology or implementation 
+            and is meant to provide an understanding of a high level approach. A meta level attack pattern is a 
+            generalization of related group of standard level attack patterns.
+            
+            **Detailed Attack Patterns** - Detailed attack patterns are more specific than meta attack patterns and 
+            standard attack patterns and often require a specific protection mechanism to mitigate actual attacks.
+            A detailed level attack pattern often will leverage a number of different standard level attack patterns 
+            chained together to accomplish a goal.
+            """)
+            
+            
+        
         st.subheader("CAPECs: ATT&CK Patterns")
+        st.markdown("""
+            Source: [capec.mitre.org](https://capec.mitre.org/data/definitions/658.html)
+            """)
+        
+        df = get_capecs_()
+        st.dataframe(df, height=350, width=1000)
         
 
 if selected_page == "About":
