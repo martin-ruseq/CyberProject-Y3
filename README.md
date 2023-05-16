@@ -21,7 +21,8 @@ As you may have noticed, the application will present the data in the form of ch
 ## Production Environment :rocket:
 [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://cyberproject-marcinrusiecki.streamlit.app/)
  
+## Code of Conduct
+Please note that this project has a Code of Conduct. By participating in this project, you agree to abide by its terms. See the [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md) file for more information.
 
 ## License :page_facing_up:
-
 This project is licensed under the MPL v2. See the [LICENSE](LICENSE) file for more information.
