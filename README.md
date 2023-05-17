@@ -1,4 +1,6 @@
-# Cybercrime Data Collection Application :bar_chart:
+<p align="center">
+  <img src="resources/github-nobg.png" alt="CyberHub logo"  style="width: 70%; height: auto;">
+</p>
 
 As part of my 3rd year Cyber Security project, I am creating a Python application that collects cybercrime-related data from the Internet. The application will be built with the use of the following tools:
 
@@ -9,7 +11,7 @@ As part of my 3rd year Cyber Security project, I am creating a Python applicatio
 - [Requests](https://requests.readthedocs.io/en/master/) - a library for making HTTP requests
 - and many more...
   
-As you may have noticed, the application will present the data in the form of charts and graphs as a web application. The applcation is in the early stages of development, so if like what you see in [here](#production-environment-rocket), please :star: the repository and <a href="https://github.com/martin-ruseq" target="_blank" style="background-color: #0366d6; color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none; font-weight: bold; display: inline-block;">Follow Me</a> on GitHub to stay up to date with the latest changes and new features that will be adding regularly for the next few weeks.
+As you may have noticed, the application will present the data in the form of charts and graphs as a web application. The applcation is in the early stages of development, so if like what you see in [here](https://cyberproject-marcinrusiecki.streamlit.app/), please :star: the repository and <a href="https://github.com/martin-ruseq" target="_blank" style="background-color: #0366d6; color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none; font-weight: bold; display: inline-block;">Follow Me</a> on GitHub to stay up to date with the latest changes and new features that will be adding regularly for the next few weeks.
 
 
 ## Installation and Usage :computer:
@@ -21,14 +23,14 @@ As you may have noticed, the application will present the data in the form of ch
 ## Production Environment :rocket:
 [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://cyberproject-marcinrusiecki.streamlit.app/)
  
-## Code of Conduct :scroll:
+## Code of Conduct 📄
 Please note that this project has a Code of Conduct. By participating in this project, you agree to abide by its terms. See the [Conduct Of Code](./CODE_OF_CONDUCT.md) for more information.
 
 ## Contributing :handshake:
 Here you can find the [Contributing Guidelines](./CONTRIBUTING.md) for this project.
 
-## Security Policy :judge:
+## Security Policy ⚖️
 Here you can find the [Security Policy](./SECURITY.md) for this project.
 
-## License :page_facing_up:
+## License 📜
 This project is licensed under the MPL v2. See the [LICENSE](LICENSE) file for more information.

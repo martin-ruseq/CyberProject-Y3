@@ -2,7 +2,7 @@
 
 ## Reporting a Vulnerability
 
-At [Your Web Application Name], I take security vulnerabilities seriously. If you discover a security issue within my application, I appreciate your help in disclosing it to me responsibly.
+At CyberHub, I take security vulnerabilities seriously. If you discover a security issue within my application, I appreciate your help in disclosing it to me responsibly.
 
 To report a security vulnerability, please follow these steps:
 
