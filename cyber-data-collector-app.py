@@ -132,7 +132,7 @@ if selected_page == "Home":
             )
             
             st.markdown(
-                f'<p style = "text-align: right; color: #6C757D;">Published: {df["date"][i]}</p>',
+                f'<p style = "text-align: right; color: #6C757D;">Published: {df["date"][i][0:-5]}</p>',
                 unsafe_allow_html = True,
             )
 
