@@ -69,10 +69,10 @@ if selected_page == "Home":
 # ----------------------------------------- START OF CYBER STATISTICS PAGE ------------------------------------- #
 if selected_page == "Cyber Statistics":
     
-        st.markdown(
-        "<h1 style = 'text-align: center; color: #0062AF;'>Cyber Statistics</h1>",
-        unsafe_allow_html = True,)
-    
+    st.markdown(
+    "<h1 style = 'text-align: center; color: #0062AF;'>Cyber Statistics</h1>",
+    unsafe_allow_html = True,)
+
     st.markdown(
         '<hr style = "border-top: 4px solid #FCCA3A; border-radius: 5px">',
         unsafe_allow_html = True,)
