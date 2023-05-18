@@ -81,7 +81,73 @@ if selected_page == "Home":
     st.warning(
         "The app is still in development and more features will be added in the future :wrench: \n\nPlease check back later for updates :new: \n\nThank you for your patience :pray: "
     )
-# ----------------------------------------------- START OF ABOUT PAGE ------------------------------------------ #
+    def get_news():
+        # RSS Feed with the latest cyber news using bs4 and requests libraries
+        url = "https://feeds.feedburner.com/TheHackersNews"
+        response = requests.get(url)
+        rss_feed = bs4(response.content, "xml")
+        items = rss_feed.find_all("item")
+        
+        # Create empty lists to store the data
+        titles = []
+        links = []
+        descriptions = []
+        dates = []
+        
+        # Loop through the items and extract the data
+        for item in items:
+            title = item.find("title").text
+            link = item.find("link").text
+            description = item.find("description").text
+            date = item.find("pubDate").text
+            enclosure = item.find("enclosure")["url"]
+            titles.append(title)
+            links.append(link)
+            descriptions.append(description)
+            dates.append(date)
+            
+        df = pd.DataFrame(
+            {
+                "title": titles,
+                "link": links,
+                "description": descriptions,
+                "date": dates,
+            }
+        )    
+            
+        for i in range(len(df)):
+            st.markdown(
+                f'<h3 style = "text-align: left; color: #0062AF;">{df["title"][i]}</h3>',
+                unsafe_allow_html = True,
+            )
+            st.markdown(
+                f'<p style = "text-align: left; color: #6C757D;">{df["description"][i]}</p>',
+                unsafe_allow_html = True,
+            )
+            st.markdown(
+                f'<p style = "text-align: left; color: #6C757D;">{df["date"][i]}</p>',
+                unsafe_allow_html = True,
+            )
+            st.markdown(
+                f'<p style = "text-align: left; color: #6C757D;"><a href = "{df["link"][i]}" target = "_blank">Read more</a></p>',
+                unsafe_allow_html = True,
+            )
+            st.markdown(
+                '<hr style = "border-top: 4px solid #FCCA3A; border-radius: 5px">',
+                unsafe_allow_html = True,
+            )
+    st.title("Latest Cyber News")
+    st.markdown("""
+        Source: [The Hacker News](https://thehackernews.com/)
+        """)
+    st.markdown(
+        '<hr style = "border-top: 4px solid #FCCA3A; border-radius: 5px">',
+        unsafe_allow_html = True,
+    )
+            
+    get_news()
+    
+# ------------------------------------------------ END OF HOME PAGE -------------------------------------------- #
 
 
 # ----------------------------------------- START OF CYBER STATISTICS PAGE ------------------------------------- #
@@ -128,9 +194,9 @@ if selected_page == "Cyber Statistics":
 
             # Check if the row contains data
             if len(cells) > 0:
-                methods = cells[0].text.strip()  # Get the hacking methods
+                methods = cells[0].text.strip()     # Get the hacking methods
                 percentage = cells[1].text.strip()  # Get the percentage of the hacking methods
-                methods_list.append(methods)  # Append the methods to the list
+                methods_list.append(methods)        # Append the methods to the list
                 percentage_list.append(percentage)
 
 
