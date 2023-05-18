@@ -9,6 +9,7 @@ from bs4 import BeautifulSoup as bs4
 import plotly_express as px
 import plotly.graph_objs as pgo
 from streamlit_option_menu import option_menu
+import lxml
 
 # Set the page title and icon
 st.set_page_config(
@@ -85,7 +86,7 @@ if selected_page == "Home":
         # RSS Feed with the latest cyber news using bs4 and requests libraries
         url = "https://feeds.feedburner.com/TheHackersNews"
         response = requests.get(url)
-        rss_feed = bs4(response.content, "lxml")
+        rss_feed = bs4(response.content, features = "xml")
         items = rss_feed.find_all("item")
         
         # Create empty lists to store the data
@@ -124,14 +125,17 @@ if selected_page == "Home":
                 f'<p style = "text-align: left; color: #6C757D;">{df["description"][i]}</p>',
                 unsafe_allow_html = True,
             )
-            st.markdown(
-                f'<p style = "text-align: left; color: #6C757D;">{df["date"][i]}</p>',
-                unsafe_allow_html = True,
-            )
+            
             st.markdown(
                 f'<p style = "text-align: left; color: #6C757D;"><a href = "{df["link"][i]}" target = "_blank">Read more</a></p>',
                 unsafe_allow_html = True,
             )
+            
+            st.markdown(
+                f'<p style = "text-align: right; color: #6C757D;">Published: {df["date"][i]}</p>',
+                unsafe_allow_html = True,
+            )
+
             st.markdown(
                 '<hr style = "border-top: 4px solid #FCCA3A; border-radius: 5px">',
                 unsafe_allow_html = True,
