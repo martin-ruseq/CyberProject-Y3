@@ -1232,3 +1232,5 @@ if selected_page == "Contact":
         "If you have any questions or suggestions, you can contact me at [LinkedIn](https://www.linkedin.com/in/marcinrusiecki/)."
     )
 # ---------------------------------------------------- END OF CONTACT PAGE ------------------------------------- #
+
+
