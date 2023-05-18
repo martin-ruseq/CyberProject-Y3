@@ -60,6 +60,24 @@ with st.sidebar:
 if selected_page == "Home":
     st.title("Welcome to the CyberHub :wave:")
     st.subheader("*Your cyber statistics in one place* :bar_chart:")
+    
+    st.markdown("""
+            <style>
+            #welcome-to-the-cyberhub {
+                text-align: center;
+                color: #0062AF;
+                font-size: 50px;
+                font-family: 'Segoe UI';
+                }
+            #your-cyber-statistics-in-one-place {
+                text-align: center;
+                color: #6C757D;
+                font-size: 20px;
+                font-family: 'Segoe UI';
+                }
+            </style>
+            """, unsafe_allow_html = True)
+    
     st.warning(
         "The app is still in development and more features will be added in the future :wrench: \n\nPlease check back later for updates :new: \n\nThank you for your patience :pray: "
     )
@@ -1110,6 +1128,17 @@ if selected_page == "CVE Data":
 # ---------------------------------------------------- START OF ABOUT PAGE ------------------------------------- #
 if selected_page == "About":
     st.title("About")
+    st.markdown("""
+        <style>
+        #about {
+            text-align: center;
+            color: #0062AF;
+            font-size: 50px;
+            font-family: 'Segoe UI';
+            }
+        </style> """, unsafe_allow_html=True)   
+            
+    
     st.write(
         "This app was created to collect cyber data from various sources and visualize it in one place. The data is collected using Python and the visualization is done using Streamlit. The app is still in development and more features will be added in the future."
     )
@@ -1119,6 +1148,16 @@ if selected_page == "About":
 # ---------------------------------------------------- START OF CONTACT PAGE ----------------------------------- #
 if selected_page == "Contact":
     st.title("Contact")
+    st.markdown("""
+        <style>
+        #about {
+            text-align: center;
+            color: #0062AF;
+            font-size: 50px;
+            font-family: 'Segoe UI';
+            }
+        </style> """, unsafe_allow_html=True)  
+    
     st.write(
         "If you have any questions or suggestions, you can contact me at [LinkedIn](https://www.linkedin.com/in/marcinrusiecki/)."
     )
