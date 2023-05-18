@@ -85,7 +85,7 @@ if selected_page == "Home":
         # RSS Feed with the latest cyber news using bs4 and requests libraries
         url = "https://feeds.feedburner.com/TheHackersNews"
         response = requests.get(url)
-        rss_feed = bs4(response.content, "xml")
+        rss_feed = bs4(response.content, "lxml")
         items = rss_feed.find_all("item")
         
         # Create empty lists to store the data
