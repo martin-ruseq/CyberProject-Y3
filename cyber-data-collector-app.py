@@ -26,7 +26,7 @@ hide_streamlit_style = """
             .stActionButton {visibility: hidden;}
             </style>
             """
-#st.markdown(hide_streamlit_style, unsafe_allow_html = True) # unsafe_allow_html disable the html tags escaping from the body
+st.markdown(hide_streamlit_style, unsafe_allow_html = True) # unsafe_allow_html disable the html tags escaping from the body
 
 # Create a sidebar menu
 with st.sidebar:
