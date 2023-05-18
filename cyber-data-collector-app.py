@@ -910,7 +910,7 @@ if selected_page == "CVE Data":
         st.dataframe(df, height=350, width=1000)
     
     with tab5:
-        def get_capecs_():
+        def get_capecs():
             url = "https://capec.mitre.org/data/definitions/658.html"
             respones = requests.get(url)
             soup = bs4(respones.content, 'html.parser')
@@ -972,7 +972,7 @@ if selected_page == "CVE Data":
             Source: [capec.mitre.org](https://capec.mitre.org/data/definitions/658.html)
             """)
         
-        df = get_capecs_()
+        df = get_capecs()
         st.dataframe(df, height=350, width=1000)
         
 if selected_page == "About":
