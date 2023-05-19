@@ -2,10 +2,6 @@ import streamlit as st
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup as bs4
-import plotly_express as px
-import plotly.graph_objs as pgo
-from streamlit_option_menu import option_menu
-import lxml
 
    
 st.title("Welcome to the CyberHub :wave:")

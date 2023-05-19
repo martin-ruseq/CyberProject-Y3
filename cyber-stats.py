@@ -4,8 +4,6 @@ import requests
 from bs4 import BeautifulSoup as bs4
 import plotly_express as px
 import plotly.graph_objs as pgo
-from streamlit_option_menu import option_menu
-import lxml
 
 st.markdown(
     "<h1 style = 'text-align: center; color: #0062AF;'>Cyber Statistics</h1>",
