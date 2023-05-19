@@ -1,3 +1,7 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
 import streamlit as st
 import pandas as pd
 import requests
@@ -469,11 +473,10 @@ def download_btns_cyber_market_data(cyber_market_list, years_list):
             file_name = "cybersecurity-market-size.html",
             mime = "text/html",
         )
+        
     return csv_btn, json_btn, html_btn
 
-cyber_marker_view = st.selectbox(
-    "Select View Type:", ["Vertical Bar Chart", "Table"]
-)
+cyber_marker_view = st.selectbox("Select View Type:", ["Vertical Bar Chart", "Table"])
 
 if cyber_marker_view == "Vertical Bar Chart":
     st.write(create_cyber_market_barchart(cyber_market_df[0]))
@@ -500,3 +503,4 @@ elif cyber_marker_view == "Table":
         '<hr style="border-top: 4px solid #FCCA3A; border-radius: 5px">',
         unsafe_allow_html = True,
     )
+# --------------------- END OF CYBERSECURITY MARKET SIZE WORLDWIDE 2019-2030 DATA ------------------------- #
