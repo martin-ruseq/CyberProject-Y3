@@ -150,16 +150,12 @@ if selected_page == "Home":
     )
             
     get_news()
-    
 # ------------------------------------------------ END OF HOME PAGE -------------------------------------------- #
 
 
 # ----------------------------------------- START OF CYBER STATISTICS PAGE ------------------------------------- #
 if selected_page == "Cyber Statistics":
     exec(open("cyber-stats.py").read())
-    
-    # ----------------------------------- END CYBER MARKET SIZE WORDLWIDE -------------------------------------- #
-
 # ---------------------------------------- END OF CYBER STATISTICS PAGE ---------------------------------------- #
 
 
