@@ -71,5 +71,3 @@ if selected_page == "About":
 if selected_page == "Contact":
     exec(open("contact.py").read())
 # --------------------------------------------------- END PAGES ------------------------------------------------ #
-
-
