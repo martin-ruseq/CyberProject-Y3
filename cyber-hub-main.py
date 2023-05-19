@@ -44,10 +44,11 @@ with st.sidebar:
             "bi-shield-exclamation",
             "info-square",
             "envelope",
-        ],
+        ],  # Icons for each option, displayed before the text
         default_index = 0,  # Index of the default option ("Home" in this case)
     )
 
+    # Add a custom footer to the sidebar
     custom_footer = """
     <footer style = "font-family: 'Segoe UI'; font-size: 14px; color: #6C757D; text-align: center; padding: 125px 0px 10px 0px;"><img src="https://cdn-icons-png.flaticon.com/512/4486/4486819.png" width="16" height="16">&nbsp;&nbsp;with ❤️ by 
     <a href = "https://github.com/martin-ruseq" target = "_blank">Marcin Rusiecki</a>"""
@@ -59,15 +60,15 @@ with st.sidebar:
 if selected_page == "Home":
     exec(open("home.py").read())
 
-if selected_page == "Cyber Statistics":
+elif selected_page == "Cyber Statistics":
     exec(open("cyber-stats.py").read())
 
-if selected_page == "CVE Data":
+elif selected_page == "CVE Data":
     exec(open("cve-data.py").read())
 
-if selected_page == "About":
+elif selected_page == "About":
     exec(open("about.py").read())
 
-if selected_page == "Contact":
+else:
     exec(open("contact.py").read())
 # --------------------------------------------------- END PAGES ------------------------------------------------ #
