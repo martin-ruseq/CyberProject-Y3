@@ -7,7 +7,7 @@ import pandas as pd
 import requests
 from bs4 import BeautifulSoup as bs4
 
-   
+
 st.title("Welcome to the CyberHub :wave:")
 st.subheader("*Your cyber statistics in one place* :bar_chart:")
 
@@ -26,24 +26,26 @@ st.markdown("""
             font-family: 'Segoe UI';
             }
         </style>
-        """, unsafe_allow_html = True)
+        """, unsafe_allow_html=True)
 
 st.warning(
     "The app is still in development and more features will be added in the future :wrench: \n\nPlease check back later for updates :new: \n\nThank you for your patience :pray: "
 )
+
+
 def get_news():
     # RSS Feed with the latest cyber news using bs4 and requests libraries
     url = "https://feeds.feedburner.com/TheHackersNews"
     response = requests.get(url)
-    rss_feed = bs4(response.content, features = "xml")
+    rss_feed = bs4(response.content, features="xml")
     items = rss_feed.find_all("item")
-    
+
     # Create empty lists to store the data
     titles = []
     links = []
     descriptions = []
     dates = []
-    
+
     # Loop through the items and extract the data
     for item in items:
         title = item.find("title").text
@@ -55,7 +57,7 @@ def get_news():
         links.append(link)
         descriptions.append(description)
         dates.append(date)
-        
+
     df = pd.DataFrame(
         {
             "title": titles,
@@ -63,39 +65,41 @@ def get_news():
             "description": descriptions,
             "date": dates,
         }
-    )    
-        
+    )
+
     for i in range(len(df)):
         st.markdown(
             f'<h3 style = "text-align: left; color: #0062AF;">{df["title"][i]}</h3>',
-            unsafe_allow_html = True,
+            unsafe_allow_html=True,
         )
         st.markdown(
             f'<p style = "text-align: left; color: #6C757D;">{df["description"][i]}</p>',
-            unsafe_allow_html = True,
+            unsafe_allow_html=True,
         )
-        
+
         st.markdown(
             f'<p style = "text-align: left; color: #6C757D;"><a href = "{df["link"][i]}" target = "_blank">Read more</a></p>',
-            unsafe_allow_html = True,
+            unsafe_allow_html=True,
         )
-        
+
         st.markdown(
             f'<p style = "text-align: right; color: #6C757D;">Published: {df["date"][i][0:-5]}</p>',
-            unsafe_allow_html = True,
+            unsafe_allow_html=True,
         )
 
         st.markdown(
             '<hr style = "border-top: 4px solid #FCCA3A; border-radius: 5px">',
-            unsafe_allow_html = True,
+            unsafe_allow_html=True,
         )
+
+
 st.title("Latest Cyber News")
 st.markdown("""
     Source: [The Hacker News](https://thehackernews.com/)
     """)
 st.markdown(
     '<hr style = "border-top: 4px solid #FCCA3A; border-radius: 5px">',
-    unsafe_allow_html = True,
+    unsafe_allow_html=True,
 )
-        
+
 get_news()

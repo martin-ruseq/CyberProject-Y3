@@ -13,7 +13,7 @@ st.markdown("""
         font-size: 50px;
         font-family: 'Segoe UI';
         }
-    </style> """, unsafe_allow_html=True)  
+    </style> """, unsafe_allow_html=True)
 
 st.write(
     "If you have any questions or suggestions, you can contact me at [LinkedIn](https://www.linkedin.com/in/marcinrusiecki/)."
