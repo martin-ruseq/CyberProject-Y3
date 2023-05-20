@@ -34,7 +34,7 @@ with st.sidebar:
         options = [
             "Home",
             "Cyber Statistics",
-            "CVE Data",
+            "CVE & Related Data",
             "About",
             "Contact",
         ],  # List of options in the menu
@@ -63,7 +63,7 @@ if selected_page == "Home":
 elif selected_page == "Cyber Statistics":
     exec(open("cyber-stats.py").read())
 
-elif selected_page == "CVE Data":
+elif selected_page == "CVE & Related Data":
     exec(open("cve-data.py").read())
 
 elif selected_page == "About":
