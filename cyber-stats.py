@@ -532,3 +532,4 @@ elif cyber_marker_view == "Table":
         unsafe_allow_html=True,
     )
 # --------------------- END OF CYBERSECURITY MARKET SIZE WORLDWIDE 2019-2030 DATA ------------------------- #
+
