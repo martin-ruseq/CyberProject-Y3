@@ -60,18 +60,13 @@ if data_table is not None:
             percentage_list.append(percentage)
 
     # ------------------------------------- START OF GLOBAL HACKING METHODS -------------------------------- #
-    st.title("Global Hacking Methods")
+    st.title("Global Hacking Methods in 2019")
     st.markdown(
         """
         This chart/table shows the percentage of the leading global hacking methods.
 
         Source: [statista.com](https://www.statista.com/statistics/221390/share-of-hacking-methods-across-organizations/)
         """
-    )
-
-    # Create a dropdown menu for year selection
-    data_year = st.selectbox(
-        "Select Year:", ["2019", "2018", "2017", "2016", "2015"]
     )
 
     # Create dropdown menu for chart type
@@ -83,7 +78,7 @@ if data_table is not None:
     chart_df = pd.DataFrame(chart_data)
 
     # Createing the horizontal bar chart using Plotly
-    if data_year == "2019" and view_type == "Horizontal Bar Chart":
+    if view_type == "Horizontal Bar Chart":
         hack_methods_2019 = pgo.Figure(
             pgo.Bar(
                 # Set the x-axis to the percentage
@@ -174,14 +169,10 @@ if data_table is not None:
         csv_hack, json_hack, html_hack = download_btns_hack_methods(
             methods_list, percentage_list
         )
-    elif not data_year == "2019" and view_type == "Horizontal Bar Chart":
-        st.warning("No data available for the selected year :warning:")
-
-    if data_year == "2019" and view_type == "Table":
+    else:
         st.table(chart_df)
         st.info("To download the data, please select the chart view.")
-    elif not data_year == "2019" and view_type == "Table":
-        st.warning("No data available for the selected year :warning:")
+    # -------------------------------------- END OF GLOBAL HACKING METHODS --------------------------------- #
 
 # Custom devider
 st.markdown(
@@ -232,7 +223,7 @@ def case_table(url, selected_year):
                     "Description": case_description_list,
                 }
             )
-            cases_df.index = cases_df.index + 1  # Start index from 1
+            cases_df.index = cases_df.index + 1  # Start index from 1, not 0
 
             return cases_df
 
@@ -283,9 +274,9 @@ def make_damages_df(damage_table):
             years_list.append(years)
     damages_df = pd.DataFrame({"Years": years_list, "Damages": damages_list})
 
-    return damages_df, damages_list, years_list
+    return damages_df, damages_list, years_list     # return tree values in a tuple so that we can use them later
 
-
+# access the tuple values using indexing
 damages_df = make_damages_df(damage_table)
 damages_list = damages_df[1]
 yeas_list = damages_df[2]
