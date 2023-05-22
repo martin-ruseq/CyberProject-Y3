@@ -28,11 +28,6 @@ st.markdown("""
         </style>
         """, unsafe_allow_html=True)
 
-st.warning(
-    "The app is still in development and more features will be added in the future :wrench: \n\nPlease check back later for updates :new: \n\nThank you for your patience :pray: "
-)
-
-
 def get_news():
     # RSS Feed with the latest cyber news using bs4 and requests libraries
     url = "https://feeds.feedburner.com/TheHackersNews"
