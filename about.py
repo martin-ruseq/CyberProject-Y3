@@ -69,6 +69,21 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
+st.subheader("I can't see the data, what should I do?")
+st.markdown("""
+    If you can't see the data, it is probably because the application is still loading the data.
+    If you see the loading icon like this one:
+    """)
+st.image("resources/running_app.png", width=160)
+st.markdown("""
+    in the top right corner of the screen, it means that the application is still loading the data.
+    Please wait a few seconds and the data should appear.""")
+
+st.markdown(
+    '<hr style = "border-top: 4px solid #FCCA3A; border-radius: 5px">',
+    unsafe_allow_html=True,
+)
+
 st.subheader("Who is the author of CyberHub?")
 st.markdown("""
     CyberHub was created by Marcin Rusiecki, a Cybersecurity student of the South East Technical University in Ireland.
