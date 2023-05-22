@@ -32,14 +32,14 @@ with st.sidebar:
     selected_page = option_menu(
         menu_title = "",  # Title of the menu
         options = [
-            "Home",
+            "Latest Cyber News",
             "Cyber Statistics",
             "CVE & Related Data",
             "About",
             "Contact",
         ],  # List of options in the menu
         icons=[
-            "house",
+            "bi-newspaper",
             "bi-bar-chart-line",
             "bi-shield-exclamation",
             "info-square",
@@ -57,8 +57,8 @@ with st.sidebar:
    
    
 # ----------------------------------------------- START PAGES ------------------------------------------------- #   
-if selected_page == "Home":
-    exec(open("home.py").read())
+if selected_page == "Latest Cyber News":
+    exec(open("news.py").read())
 
 elif selected_page == "Cyber Statistics":
     exec(open("cyber-stats.py").read())
