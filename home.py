@@ -28,6 +28,11 @@ st.markdown("""
         </style>
         """, unsafe_allow_html=True)
 
+st.markdown(
+    '<hr style = "border-top: 4px solid #FCCA3A; border-radius: 5px">',
+    unsafe_allow_html=True,
+)
+
 def get_news():
     # RSS Feed with the latest cyber news using bs4 and requests libraries
     url = "https://feeds.feedburner.com/TheHackersNews"
