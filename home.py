@@ -97,9 +97,5 @@ st.title("Latest Cyber News")
 st.markdown("""
     Source: [The Hacker News](https://thehackernews.com/)
     """)
-st.markdown(
-    '<hr style = "border-top: 4px solid #FCCA3A; border-radius: 5px">',
-    unsafe_allow_html=True,
-)
 
 get_news()
