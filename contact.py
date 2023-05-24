@@ -23,7 +23,7 @@ st.write("If you have any questions or suggestions, feel free to contact me via 
 
 st.write("Here are my social media links and email:")
 st.markdown("""
-        <a href = "https://www.linkedin.com/in/marcin-rusiecki/" target="_blank">
+        <a href = "https://www.linkedin.com/in/marcinrusiecki/" target="_blank">
         <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" width="40" height="40">
         </a>
         &nbsp; 
