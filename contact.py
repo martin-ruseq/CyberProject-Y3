@@ -1,3 +1,8 @@
+# Author:       Marcin Rusiecki
+# Student ID:   C00263263
+# Purpose:      Contact page of the CyberHub app. 
+#               It contains information about the author's social media links and email.
+
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.

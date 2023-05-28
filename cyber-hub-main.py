@@ -1,3 +1,8 @@
+# Author:       Marcin Rusiecki
+# Student ID:   C00263263
+# Purpose:      Main file of the CyberHub app. It contains the setup of the app, the sidebar menu and options (pages)
+
+
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
@@ -5,9 +10,8 @@
 import streamlit as st
 from streamlit_option_menu import option_menu
 
-
 # ----------------------------------------------- START SETUP ------------------------------------------------- #
-# Set the page title and icon
+# set the page title and icon
 st.set_page_config(
     page_title = "CyberHub App",
     page_icon = "⛏️",
@@ -15,7 +19,7 @@ st.set_page_config(
     initial_sidebar_state = "expanded",
 )
 
-# Hide the menu and footer of Streamlit Cloud deployments
+# hide the menu and footer of Streamlit Cloud deployments
 hide_streamlit_style = """
             <style>
             #MainMenu {visibility: hidden;}
@@ -25,34 +29,34 @@ hide_streamlit_style = """
             """
 st.markdown(hide_streamlit_style, unsafe_allow_html = True) # unsafe_allow_html disable the html tags escaping from the body
 
-# Create a sidebar menu
+# creates sidebar menu
 with st.sidebar:
     st.sidebar.image("resources/logo.png", use_column_width = True)
 
     selected_page = option_menu(
-        menu_title = "",  # Title of the menu
+        menu_title = "",  # title of the menu
         options = [
             "Latest Cyber News",
             "Cyber Statistics",
             "CVE & Related Data",
             "About",
             "Contact",
-        ],  # List of options in the menu
+        ],  # list of options in the menu
         icons=[
             "bi-newspaper",
             "bi-bar-chart-line",
             "bi-shield-exclamation",
             "info-square",
             "envelope",
-        ],  # Icons for each option, displayed before the text
-        default_index = 0,  # Index of the default option ("Home" in this case)
+        ],  # icons for each option, displayed before the text
+        default_index = 0,  # index of the default option ("Latest Cyber News" in this case)
     )
 
     # Add a custom footer to the sidebar
     custom_footer = """
-    <footer style = "font-family: 'Segoe UI'; font-size: 14px; color: #6C757D; text-align: center; padding: 125px 0px 10px 0px;"><img src="https://cdn-icons-png.flaticon.com/512/4486/4486819.png" width="16" height="16">&nbsp;&nbsp;with ❤️ by 
+    <footer style = "font-family: 'Segoe UI'; font-size: 14px; color: #6C757D; text-align: center;"><img src="https://cdn-icons-png.flaticon.com/512/4486/4486819.png" width="16" height="16">&nbsp;&nbsp;with ❤️ by 
     <a href = "https://github.com/martin-ruseq" target = "_blank">Marcin Rusiecki</a>"""
-    st.markdown(custom_footer, unsafe_allow_html = True)
+    st.markdown(custom_footer, unsafe_allow_html = True) 
 # --------------------------------------------------- END SETUP ------------------------------------------------ #
    
    

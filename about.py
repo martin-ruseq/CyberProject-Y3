@@ -1,3 +1,7 @@
+# Author:       Marcin Rusiecki
+# Student ID:   C00263263
+# Purpose:      About page of the CyberHub app. It contains information about the app and FAQ.
+
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
@@ -74,7 +78,7 @@ st.markdown("""
     If you can't see the data, it is probably because the application is still loading the data.
     If you see the loading icon like this one:
     """)
-st.image("resources/running_app.png", width=160)
+st.image("resources/data_loading.png", width=160)
 st.markdown("""
     in the top right corner of the screen, it means that the application is still loading the data.
     Please wait a few seconds and the data should appear.""")

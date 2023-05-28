@@ -1,3 +1,8 @@
+# Author:      Marcin Rusiecki
+# Student ID:  C00263263
+# Purpose:     Cyber Statistics page of the CyberHub app. 
+#              It contains several charts and tables about global cyber security statistics.
+
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.

@@ -1,3 +1,7 @@
+# Author:       Marcin Rusiecki
+# Student ID:   C00263263
+# Purpose:      News page of the CyberHub app. It contains the latest cyber news and it is a main page of the app.
+
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
@@ -6,7 +10,6 @@ import streamlit as st
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup as bs4
-
 
 st.title("Welcome to the CyberHub :wave:")
 st.subheader("*Your cyber statistics in one place* :bar_chart:")
@@ -91,7 +94,6 @@ def get_news():
             '<hr style = "border-top: 4px solid #FCCA3A; border-radius: 5px">',
             unsafe_allow_html=True,
         )
-
 
 st.title("Latest Cyber News")
 st.markdown("""
