@@ -90,7 +90,7 @@ st.markdown(
 
 st.subheader("Who is the author of CyberHub?")
 st.markdown("""
-    CyberHub was created by Marcin Rusiecki, a Cybersecurity student of the South East Technical University in Ireland.
+    CyberHub was created by Marcin Rusiecki, a Cybersecurity student of the South East Technological University in Ireland.
     """)
 st.markdown(
     '<hr style = "border-top: 4px solid #FCCA3A; border-radius: 5px">',
