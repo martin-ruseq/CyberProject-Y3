@@ -2,27 +2,28 @@
   <img src="resources/github-nobg.png" alt="CyberHub logo"  style="width: 70%; height: auto;">
 </p>
 
-As part of my 3rd year Cyber Security project, I am creating a Python application that collects cybercrime-related data from the Internet. The application will be built with the use of the following tools:
+As part of my 3rd-year Cyber Security project, I successfully developed a Python application designed to collect cybercrime-related data from the Internet. The application has been crafted using a variety of tools, including:
 
-- [Streamlit](https://streamlit.io/) - an open-source Python library that makes it easy to create and share beautiful, custom web apps for machine learning and data science.   
-- [Beautiful Soup](https://www.crummy.com/software/BeautifulSoup/) - a library for pulling data out of HTML and XML files
-- [Pandas](https://pandas.pydata.org/) - a library for data manipulation and analysis
-- [Plotly](https://plotly.com/python/) - a graphing library for creating interactive, publication-quality graphs
-- [Requests](https://requests.readthedocs.io/en/master/) - a library for making HTTP requests
-- and many more...
+- [Streamlit](https://streamlit.io/) - an open-source Python library facilitating the creation and sharing of beautiful, custom web apps for machine learning and data science.
+- [Beautiful Soup](https://www.crummy.com/software/BeautifulSoup/) - a library adept at extracting data from HTML and XML files.
+- [Pandas](https://pandas.pydata.org/) - a versatile library for data manipulation and analysis.
+- [Plotly](https://plotly.com/python/) - a graphing library essential for crafting interactive, publication-quality graphs.
+- [Requests](https://requests.readthedocs.io/en/master/) - a library serving the purpose of making HTTP requests.
   
-As you may have noticed, the application will present the data in the form of charts and graphs as a web application. The application is in the early stages of development, so if you like what you see in [here](https://cyber-project.streamlit.app/), please :star: the repository and <a href="https://github.com/martin-ruseq" target="_blank" style="background-color: #0366d6; color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none; font-weight: bold; display: inline-block;">Follow Me</a> on GitHub to stay up to date with the latest changes and new features that will be adding regularly for the next few weeks.
-
+The application, showcased [here](https://cyber-project.streamlit.app/), elegantly presents data through charts and graphs as a web application. Having reached its completion, if you appreciate the functionality, feel free to :star: the repository and [Follow Me](https://github.com/martin-ruseq) on GitHub for future updates and additional features.
 
 ## Installation and Usage :computer:
 
-1. Clone the repository using `git clone https://github.com/martin-ruseq/CyberProject-Y3.git`
+1. Clone the repository using `git clone https://github.com/martin-ruseq/CyberProject-Y3.git`.
 2. Install the required libraries using `pip install -r requirements.txt`.
 3. Run the application using `streamlit run cyber-data-collector-app.py`.
 
 ## Production Environment :rocket:
 [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://cyber-project.streamlit.app/)
- 
+
+## Project Status :white_check_mark:
+The project is now completed, delivering the intended functionality.
+
 ## Code of Conduct 📄
 Please note that this project has a Code of Conduct. By participating in this project, you agree to abide by its terms. See the [Conduct Of Code](./CODE_OF_CONDUCT.md) for more information.
 
