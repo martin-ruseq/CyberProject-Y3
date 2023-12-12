@@ -16,7 +16,7 @@ The application, showcased [here](https://cyber-project.streamlit.app/), elegant
 
 1. Clone the repository using `git clone https://github.com/martin-ruseq/CyberProject-Y3.git`.
 2. Install the required libraries using `pip install -r requirements.txt`.
-3. Run the application using `streamlit run cyber-data-collector-app.py`.
+3. Run the application using `streamlit run cyber-hub-main.py`.
 
 ## Production Environment :rocket:
 [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://cyber-project.streamlit.app/)
